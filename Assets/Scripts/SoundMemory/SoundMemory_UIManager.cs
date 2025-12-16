@@ -31,11 +31,6 @@ namespace NguyenQuangMinh.SoundMemory
             }
         }
 
-        public void Click()
-        {
-            Debug.Log("Button Clicked");
-        }
-
         public void EnableButtons(bool enable)
         {
             foreach (Button btn in _soundButtons)
@@ -59,8 +54,6 @@ namespace NguyenQuangMinh.SoundMemory
         {
             Image img = _soundButtons[index].image;
             Color original = _originalColors[index];
-
-            //image.DOColor(_clickColor, _animDuration / 2);
 
             img.color = _clickColor;
             yield return new WaitForSeconds(_animDuration);
