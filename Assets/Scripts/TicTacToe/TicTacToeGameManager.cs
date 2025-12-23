@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace NguyenQuangMinh.TicTacToe
 {
-    public class TicTacToeGameManager : Singleton<TicTacToeGameManager>
+    public class TicTacToeGameManager : Singleton<TicTacToeGameManager>, IGameManager
     {
         [Header("References")]
         [SerializeField] private TicTacToeGridManager _gridManager;
@@ -254,6 +254,11 @@ namespace NguyenQuangMinh.TicTacToe
         {
             _isGameActive = false;
             Debug.Log(turn == Turn.Player ? "Player Win" : "Bot Win");
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 

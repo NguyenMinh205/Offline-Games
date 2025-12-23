@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace NguyenQuangMinh.ColorBlock
 {
-    public class GameManager_ColorBlocks : Singleton<GameManager_ColorBlocks>
+    public class GameManager_ColorBlocks : Singleton<GameManager_ColorBlocks>, IGameManager
     {
         [SerializeField] private ColorBoard_BoardManager boardManager;
         public ColorBoard_BoardManager BoardManager => boardManager;
@@ -50,6 +50,11 @@ namespace NguyenQuangMinh.ColorBlock
         public void GameOver()
         {
             Debug.LogError("GAME OVER! Score: " + score);
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 }

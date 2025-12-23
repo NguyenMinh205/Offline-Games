@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NguyenQuangMinh.SoundMemory
 {
-    public class SoundMemory_GameManager : Singleton<SoundMemory_GameManager>
+    public class SoundMemory_GameManager : Singleton<SoundMemory_GameManager>, IGameManager
     {
         [SerializeField] private SoundMemory_SequenceManager _sequenceManager;
         public SoundMemory_SequenceManager Sequence => _sequenceManager;
@@ -72,6 +72,11 @@ namespace NguyenQuangMinh.SoundMemory
             gameActive = false;
             _uiManager.EnableButtons(false);
             Debug.Log("Game Over! Final Score: " + score);
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 }

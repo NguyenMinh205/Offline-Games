@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace NguyenQuangMinh.SlidingPuzzle
 {
-    public class SlidingPuzzleGameManager : MonoBehaviour
+    public class SlidingPuzzleGameManager : Singleton<SlidingPuzzleGameManager>, IGameManager
     {
         [Header("Settings")]
         [SerializeField] private int _sizeBoard = 3;
@@ -279,6 +279,11 @@ namespace NguyenQuangMinh.SlidingPuzzle
         private void SetFinishImage(Sprite sprite)
         {
             if (_finishImage) _finishImage.sprite = sprite;
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 }

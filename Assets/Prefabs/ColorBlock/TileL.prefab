@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 5204796000120633761}
   - {fileID: 7375573986695537872}
   - {fileID: 5497424711794050541}
-  snapDuration: 0.2
+  originalPrefab: {fileID: 0}
   sortingGroup: {fileID: -9086394129239106900}
 --- !u!210 &-9086394129239106900
 SortingGroup:

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace NguyenQuangMinh.NumberSlide
 {
-    public class NumberSlideGameManager : Singleton<NumberSlideGameManager>
+    public class NumberSlideGameManager : Singleton<NumberSlideGameManager>, IGameManager
     {
         [SerializeField] private NumberSlideBoard _board;
         [SerializeField] private GameObject _scoreUI;
@@ -62,6 +62,11 @@ namespace NguyenQuangMinh.NumberSlide
             }
             _highScore = _currentScore;
             UpdateHighScoreUI();
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 }

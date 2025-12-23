@@ -3,7 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 namespace NguyenQuangMinh.Wordle
 {
-    public class Wordle_Board : MonoBehaviour
+    public class Wordle_Board : MonoBehaviour, IGameManager
     {
         [SerializeField] private List<Wordle_Row> _rows;
         [SerializeField] private Wordle_Keyboard _keyboard;
@@ -46,7 +46,7 @@ namespace NguyenQuangMinh.Wordle
             validWords = new List<string>(wordDB.validWords);
         }
 
-        private void StartNewGame()
+        public void StartNewGame()
         {
             isInteracting = true;
             currentRow = 0;
@@ -211,6 +211,11 @@ namespace NguyenQuangMinh.Wordle
             for (int i = 0; i < 5; i++)
                 guess += _rows[currentRow].Tiles[i].Letter;
             return guess.ToUpper();
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 }

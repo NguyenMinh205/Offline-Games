@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace NguyenQuangMinh.MineSweeper
 {
-    public class MineSweeper_GameManager : Singleton<MineSweeper_GameManager>
+    public class MineSweeper_GameManager : Singleton<MineSweeper_GameManager>, IGameManager
     {
         [SerializeField] private Transform _tilePrefab;
         [SerializeField] private Transform _tileStore;
@@ -264,6 +264,11 @@ namespace NguyenQuangMinh.MineSweeper
                     }
                 }
             }
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 }

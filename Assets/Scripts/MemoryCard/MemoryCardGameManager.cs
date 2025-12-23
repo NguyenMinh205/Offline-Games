@@ -5,7 +5,7 @@ using DG.Tweening;
 
 namespace NguyenQuangMinh.MemoryCard
 {
-    public class MemoryCardGameManager : Singleton<MemoryCardGameManager>
+    public class MemoryCardGameManager : Singleton<MemoryCardGameManager>, IGameManager
     {
         [Header("Settings")]
         [SerializeField] private Card cardPrefab;
@@ -202,6 +202,11 @@ namespace NguyenQuangMinh.MemoryCard
             {
                 Debug.Log("GAME OVER.");
             }
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
     }
 }
