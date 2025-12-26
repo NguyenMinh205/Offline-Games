@@ -24,18 +24,18 @@ namespace NguyenQuangMinh.TicTacToe
         {
             if (_newState == CellState.Empty)
             {
-                _trisOImage.enabled = false;
-                _trisXImage.enabled = false;
+                _trisOImage.gameObject.SetActive(false);
+                _trisXImage.gameObject.SetActive(false);
             }
             else if (_newState == CellState.O)
             {
-                _trisOImage.enabled = true;
-                _trisXImage.enabled = false;
+                _trisOImage.gameObject.SetActive(true);
+                _trisXImage.gameObject.SetActive(false);
             }
             else if (_newState == CellState.X)
             {
-                _trisOImage.enabled = false;
-                _trisXImage.enabled = true;
+                _trisOImage.gameObject.SetActive(false);
+                _trisXImage.gameObject.SetActive(true);
             }
             _currentState = _newState;
         }

@@ -19,17 +19,17 @@ namespace NguyenQuangMinh.NumberSlide
         private int _currentScore = 0;
         private int _highScore = 0;
 
-        private void Start()
-        {
-            StartNewGame();
-        }
-
         public void StartNewGame()
         {
             _currentScore = 0;
             SetScore();
 
             _board.StartNewGame();
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
 
         public void GameOver()
@@ -62,11 +62,6 @@ namespace NguyenQuangMinh.NumberSlide
             }
             _highScore = _currentScore;
             UpdateHighScoreUI();
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

@@ -32,11 +32,6 @@ namespace NguyenQuangMinh.MineSweeper
         private bool isGameOver = false;
         private int remainingFlags = 0;
 
-        private void Start()
-        {
-            StartNewGame();
-        }
-
         public void StartNewGame()
         {
             CloseFlagMode();
@@ -49,6 +44,11 @@ namespace NguyenQuangMinh.MineSweeper
             }
             _tiles.Clear();
             CreateGameBoard(_width, _height, _numMines);
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
 
         public void OpenFlagMode()
@@ -217,7 +217,7 @@ namespace NguyenQuangMinh.MineSweeper
                     revealedCount++;
                 }
 
-                if (tile.MineCount == 0 || tile.IsMine != true)
+                if (tile.MineCount == 0 && tile.IsMine != true)
                 {
                     foreach (int nei in GetNeighborTiles(cur))
                     {
@@ -239,7 +239,8 @@ namespace NguyenQuangMinh.MineSweeper
             for (int i = 0; i < _tiles.Count; i++)
             {
                 Tile_MineSweeper t = _tiles[i];
-                if (t.IsMine && !t.IsFlagged)
+
+                if (t.IsMine && !t.IsFlagged && !t.IsRevealed)
                 {
                     t.ShowMineSprite();
                 }
@@ -264,11 +265,6 @@ namespace NguyenQuangMinh.MineSweeper
                     }
                 }
             }
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

@@ -17,14 +17,18 @@ namespace NguyenQuangMinh.SoundMemory
         private int score = 0;
         private bool gameActive = true;
 
-        void Start()
-        {
-            StartNewGame();
-        }
-
         public void StartNewGame()
         {
             _uiManager.Init();
+            score = 0;
+            gameActive = true;
+            _sequenceManager.ResetSequence();
+            _uiManager.UpdateScore(score);
+            NextRound();
+        }
+
+        public void Restart()
+        {
             score = 0;
             gameActive = true;
             _sequenceManager.ResetSequence();
@@ -57,8 +61,8 @@ namespace NguyenQuangMinh.SoundMemory
                     score++;
                     _uiManager.UpdateScore(score);
                     _uiManager.EnableButtons(false);
-                    yield return new WaitForSeconds(roundDelay);
                     NextRound();
+                    yield return null;
                 }
             }
             else
@@ -72,11 +76,6 @@ namespace NguyenQuangMinh.SoundMemory
             gameActive = false;
             _uiManager.EnableButtons(false);
             Debug.Log("Game Over! Final Score: " + score);
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

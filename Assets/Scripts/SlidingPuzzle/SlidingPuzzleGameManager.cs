@@ -32,15 +32,32 @@ namespace NguyenQuangMinh.SlidingPuzzle
         private bool _isGameActive = false;
         private int _gridSize;
 
-        private void Start()
+        public void StartNewGame()
         {
             _pieces = new List<GameObject>();
+            foreach (Transform child in _board)
+            {
+                Destroy(child.gameObject);
+            }
+            _pieces.Clear();
+
+            int index = Random.Range(0, _piecePrefab.Count);
+            GameObject prefab = _piecePrefab[index];
+            SetFinishImage(_finishImages[index]);
+
+            CreateGamePieces(prefab, _sizeBoard, _gapThickness);
+
+            StartCoroutine(ShuffleRoutine());
+        }
+
+        public void Restart()
+        {
             StartNewGame();
         }
 
         private void Update()
         {
-            if (!_isGameActive || _isMoving) return;
+            if (!_isGameActive || _isMoving || MainGameManager.Instance.GameState != GameState.InGame) return;
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -61,22 +78,6 @@ namespace NguyenQuangMinh.SlidingPuzzle
             }
         }
 
-        public void StartNewGame()
-        {
-            foreach (Transform child in _board)
-            {
-                Destroy(child.gameObject);
-            }
-            _pieces.Clear();
-
-            int index = Random.Range(0, _piecePrefab.Count);
-            GameObject prefab = _piecePrefab[index];
-            SetFinishImage(_finishImages[index]);
-
-            CreateGamePieces(prefab, _sizeBoard, _gapThickness);
-
-            StartCoroutine(ShuffleRoutine());
-        }
 
         private void CreateGamePieces(GameObject prefab, int size, float gapThickness)
         {
@@ -279,11 +280,6 @@ namespace NguyenQuangMinh.SlidingPuzzle
         private void SetFinishImage(Sprite sprite)
         {
             if (_finishImage) _finishImage.sprite = sprite;
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

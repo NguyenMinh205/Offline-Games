@@ -42,9 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UI
+    uniqueID: 3176990611
+    locked: 0
   - name: Particle
     uniqueID: 2459799283
     locked: 0
-  - name: UI
-    uniqueID: 3176990611
+  - name: Tile (In Game)
+    uniqueID: 765956437
     locked: 0

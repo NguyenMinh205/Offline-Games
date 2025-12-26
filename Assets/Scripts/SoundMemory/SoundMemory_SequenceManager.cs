@@ -36,6 +36,7 @@ namespace NguyenQuangMinh.SoundMemory
 
         public IEnumerator PlaySequenceAnswer(System.Action action)
         {
+            yield return new WaitForSeconds(SoundMemory_GameManager.Instance.roundDelay);
             foreach (int seq in sequence)
             {
                 SoundMemory_GameManager.Instance.UI.AnimateButton(seq);

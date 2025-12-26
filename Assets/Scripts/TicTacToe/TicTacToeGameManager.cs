@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
+using TMPro;
+using UnityEditor.MPE;
 
 namespace NguyenQuangMinh.TicTacToe
 {
@@ -11,8 +13,13 @@ namespace NguyenQuangMinh.TicTacToe
     {
         [Header("References")]
         [SerializeField] private TicTacToeGridManager _gridManager;
-        [SerializeField] private WinLineManager _winLineManager; // Đã có sẵn reference này từ code bạn gửi
-        // Đã xóa LineRenderer
+        [SerializeField] private WinLineManager _winLineManager;
+
+        [Header("UI")]
+        [SerializeField] private Image _background;
+        [SerializeField] private TextMeshProUGUI _turnText;
+        [SerializeField] private Color _OTurnBG;
+        [SerializeField] private Color _XTurnBG;
 
         [Header("Game Settings")]
         [SerializeField] private float _botDelay = 0.5f;
@@ -34,47 +41,82 @@ namespace NguyenQuangMinh.TicTacToe
 
         private CellState _playerState;
         private CellState _botState;
+        private Color _playerTurnBG;
+        private Color _botTurnBG;
         private Turn _currentTurn;
         private bool _isGameActive = false;
 
-        private void Start()
-        {
-            StartNewGame();
-        }
+        private Coroutine _botCoroutine;
+        private Coroutine _drawCoroutine;
 
         public void StartNewGame()
         {
+            int firstTurn = Random.Range(0, 2);
+            _currentTurn = (firstTurn == 0) ? Turn.Player : Turn.Bot;
+
+            if (_turnText) _turnText.gameObject.SetActive(true);
+            SetupGame();
+        }
+
+        public void Restart()
+        {
+            if (_currentTurn == Turn.Player)
+            {
+                Debug.Log("Restart: Bot starts first");
+                _currentTurn = Turn.Bot;
+            }
+            else
+            {
+                Debug.Log("Restart: Player starts first");
+                _currentTurn = Turn.Player;
+            }
+            SetupGame();
+        }
+
+        public void SetupGame()
+        {
+            StopAllGameCoroutines();
+
             _gridManager.SetupGrid();
 
             if (_winLineManager != null)
                 _winLineManager.SetWinLine(WinLine.None);
 
-            int firstTurn = Random.Range(0, 2);
-            _currentTurn = (firstTurn == 0) ? Turn.Player : Turn.Bot;
-
             if (_currentTurn == Turn.Player)
             {
                 _playerState = CellState.X;
+                _playerTurnBG = _XTurnBG;
                 _botState = CellState.O;
+                _botTurnBG = _OTurnBG;
             }
             else
             {
                 _playerState = CellState.O;
+                _playerTurnBG = _OTurnBG;
                 _botState = CellState.X;
+                _botTurnBG = _XTurnBG;
             }
 
             _isGameActive = true;
 
             if (_currentTurn == Turn.Bot)
             {
-                StartCoroutine(BotTurnRoutine());
+                if (_background) _background.color = _botTurnBG;
+                if (_turnText) _turnText.text = "Bot's Turn";
+                _botCoroutine = StartCoroutine(BotTurnRoutine());
+            }
+            else
+            {
+                if (_background) _background.color = _playerTurnBG;
+                if (_turnText) _turnText.text = "Your Turn";
             }
         }
 
         public void CellClicked(int cellID)
         {
             if (!_isGameActive || _currentTurn != Turn.Player) return;
-            if (_gridManager.GetCellControllerAt(cellID).CurrentState != CellState.Empty) return;
+            var cell = _gridManager.GetCellControllerAt(cellID);
+            if (cell == null || cell.CurrentState != CellState.Empty) return;
 
             ProcessTurn(Turn.Player, cellID);
         }
@@ -92,7 +134,7 @@ namespace NguyenQuangMinh.TicTacToe
 
             if (_gridManager.CheckFullGrid())
             {
-                StartCoroutine(HandleDrawRoutine());
+                _drawCoroutine = StartCoroutine(HandleDrawRoutine());
                 return;
             }
 
@@ -102,15 +144,11 @@ namespace NguyenQuangMinh.TicTacToe
         private IEnumerator HandleDrawRoutine()
         {
             _isGameActive = false;
+            if (_turnText) _turnText.text = "Draw!";
+
             yield return new WaitForSeconds(1f);
 
-            _gridManager.SetupGrid();
-
-            if (_winLineManager != null)
-                _winLineManager.SetWinLine(WinLine.None);
-
-            _isGameActive = true;
-            ChangeTurn();
+            Restart();
         }
 
         private void ChangeTurn()
@@ -119,15 +157,36 @@ namespace NguyenQuangMinh.TicTacToe
 
             if (_currentTurn == Turn.Bot)
             {
-                StartCoroutine(BotTurnRoutine());
+                if (_background) _background.color = _botTurnBG;
+                if (_turnText) _turnText.text = "Bot's Turn";
+                _botCoroutine = StartCoroutine(BotTurnRoutine());
+            }
+            else
+            {
+                if (_background) _background.color = _playerTurnBG;
+                if (_turnText) _turnText.text = "Your Turn";
             }
         }
 
         private IEnumerator BotTurnRoutine()
         {
             yield return new WaitForSeconds(_botDelay);
+
+            if (!_isGameActive) yield break;
+
             int move = GetBotMove();
-            ProcessTurn(Turn.Bot, move);
+            if (move != -1)
+            {
+                ProcessTurn(Turn.Bot, move);
+            }
+        }
+
+        private void StopAllGameCoroutines()
+        {
+            if (_botCoroutine != null) StopCoroutine(_botCoroutine);
+            if (_drawCoroutine != null) StopCoroutine(_drawCoroutine);
+            _botCoroutine = null;
+            _drawCoroutine = null;
         }
 
         private int GetBotMove()
@@ -170,8 +229,7 @@ namespace NguyenQuangMinh.TicTacToe
             }
             else
             {
-                int randomIndex = Random.Range(0, availableMoves.Count);
-                return availableMoves[randomIndex];
+                return availableMoves[Random.Range(0, availableMoves.Count)];
             }
         }
 
@@ -179,7 +237,8 @@ namespace NguyenQuangMinh.TicTacToe
         {
             if (IsWinnerVirtual(board, _botState)) return 10 - depth;
             if (IsWinnerVirtual(board, _playerState)) return depth - 10;
-            if (_gridManager.CheckFullGrid()) return 0;
+
+            if (!IsAnyCellEmpty(board)) return 0;
 
             if (isMaximizing)
             {
@@ -211,6 +270,12 @@ namespace NguyenQuangMinh.TicTacToe
                 }
                 return bestScore;
             }
+        }
+
+        private bool IsAnyCellEmpty(CellState[] board)
+        {
+            for (int i = 0; i < 9; i++) if (board[i] == CellState.Empty) return true;
+            return false;
         }
 
         private bool IsWinnerVirtual(CellState[] board, CellState state)
@@ -253,12 +318,11 @@ namespace NguyenQuangMinh.TicTacToe
         private void EndGame(Turn turn)
         {
             _isGameActive = false;
-            Debug.Log(turn == Turn.Player ? "Player Win" : "Bot Win");
-        }
+            StopAllGameCoroutines();
 
-        public void Restart()
-        {
-            StartNewGame();
+            if (_turnText)
+                _turnText.text = (turn == Turn.Player ? "YOU WIN!" : "BOT WINS!");
+            Debug.Log(turn == Turn.Player ? "Player Win" : "Bot Win");
         }
     }
 

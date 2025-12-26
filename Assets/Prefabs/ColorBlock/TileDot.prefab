@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiles:
   - {fileID: 1591151595069802350}
-  snapDuration: 0.25
+  originalPrefab: {fileID: 0}
   sortingGroup: {fileID: 8444015852706886382}
 --- !u!210 &8444015852706886382
 SortingGroup:
@@ -58,9 +58,9 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4023206518875922670}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 765956437
+  m_SortingLayer: 3
+  m_SortingOrder: 20
   m_SortAtRoot: 0
 --- !u!1001 &4914306997235934739
 PrefabInstance:

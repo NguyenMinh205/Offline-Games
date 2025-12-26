@@ -24,7 +24,7 @@ namespace NguyenQuangMinh.DOTrescue
 
         private void Update()
         {
-            if (DOTrescueGameManager.Instance.IsGameOver) return;
+            if (DOTrescueGameManager.Instance.IsGameOver || MainGameManager.Instance.GameState != GameState.InGame) return;
             _currentRotateTime += Time.deltaTime;
 
             if (_currentRotateTime > _rotateTime)

@@ -65,6 +65,11 @@ namespace NguyenQuangMinh.Wordle
             RandomSolution();
         }
 
+        public void Restart()
+        {
+            StartNewGame();
+        }
+
         public void RandomSolution()
         {
             if (solutions == null || solutions.Count == 0) return;
@@ -211,11 +216,6 @@ namespace NguyenQuangMinh.Wordle
             for (int i = 0; i < 5; i++)
                 guess += _rows[currentRow].Tiles[i].Letter;
             return guess.ToUpper();
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

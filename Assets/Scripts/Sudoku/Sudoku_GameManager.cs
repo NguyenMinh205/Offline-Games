@@ -18,11 +18,6 @@ namespace NguyenQuangMinh.Sudoku
         private const int GRID_SIZE = 9;
         private const int SUBGRID_SIZE = 3;
 
-        private void Start()
-        {
-            StartNewGame();
-        }
-
         public void StartNewGame()
         {
             hasGameFinished = false;
@@ -35,7 +30,13 @@ namespace NguyenQuangMinh.Sudoku
 
         public void Restart()
         {
-            StartNewGame();
+            ResetDefault(_selectedCell);
+            ClearBoard();
+            hasGameFinished = false;
+            cells = new Sudoku_Cell[GRID_SIZE, GRID_SIZE];
+            _selectedCell = null;
+            _filledCells = 0;
+            SetupBoard();
         }
 
         public void SetupBoard()
@@ -230,6 +231,7 @@ namespace NguyenQuangMinh.Sudoku
                 foreach (Sudoku_Cell cell in subGrid.Cells)
                 {
                     cell.Init('\0');
+                    cell.BackToDefault();
                 }
             }
         }

@@ -12,17 +12,15 @@ namespace NguyenQuangMinh.DOTrescue
         [SerializeField] private TextMeshProUGUI _scoreTxt;
         [SerializeField] private List<int> _levelSpeed, levelMax;
         [SerializeField] private float _levelIncreaseSpeed = 0.15f;
+        [SerializeField] private GameObject _point;
+        [SerializeField] private GameObject _player;
+        [SerializeField] private GameObject _obstacle;
 
         private bool _isGameOver = false;
         public bool IsGameOver => _isGameOver;
         private float _score = 0f;
         private float _scoreSpeed;
         private int _curLevelIndex;
-
-        private void Start()
-        {
-            StartNewGame();
-        }
 
         public void StartNewGame()
         {
@@ -36,11 +34,21 @@ namespace NguyenQuangMinh.DOTrescue
                 _scoreSpeed = _levelSpeed[_curLevelIndex];
 
             UpdateScoreText();
+            _point.SetActive(true);
+            _player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            _obstacle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            MainGameManager.Instance.ShowScore(true);
+            MainGameManager.Instance.CountDown();
+        }
+
+        public void Restart()
+        {
+            StartNewGame();
         }
 
         private void Update()
         {
-            if (_isGameOver) return;
+            if (_isGameOver || MainGameManager.Instance.GameState != GameState.InGame) return;
 
             _score += _scoreSpeed * Time.deltaTime;
             UpdateScoreText();
@@ -61,11 +69,6 @@ namespace NguyenQuangMinh.DOTrescue
         {
             if (_scoreTxt != null)
                 _scoreTxt.text = Mathf.FloorToInt(_score).ToString();
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
 
         public void GameOver()

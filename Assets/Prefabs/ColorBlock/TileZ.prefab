@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 4588954371793722815}
   - {fileID: 6199679339373062092}
   - {fileID: 3487634963352818753}
-  snapDuration: 0.2
+  originalPrefab: {fileID: 0}
   sortingGroup: {fileID: 4572468365203832978}
 --- !u!210 &4572468365203832978
 SortingGroup:
@@ -64,9 +64,9 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2993138486503507285}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 765956437
+  m_SortingLayer: 3
+  m_SortingOrder: 20
   m_SortAtRoot: 0
 --- !u!1001 &301292970637821617
 PrefabInstance:

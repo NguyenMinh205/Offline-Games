@@ -12,6 +12,7 @@ public class MainGameManager : Singleton<MainGameManager>
     [SerializeField] private GameObject _uiMainMenu;
     [SerializeField] private GameObject _uiListGame;
     [SerializeField] private GameObject _settingPopup;
+    [SerializeField] private GameObject _notificationUpdateGamePopup;
     [SerializeField] private Transform _loading;
     [SerializeField] private float _timeLoading = 0.35f;
     [SerializeField] private TextMeshProUGUI _numberText;
@@ -29,37 +30,53 @@ public class MainGameManager : Singleton<MainGameManager>
     public GameObject CurrentGame => _currentGame;
     private IGameManager _curGameManager;
     private Coroutine _countDownCoroutine;
+    private GameState _gameState;
+    public GameState GameState => _gameState;
 
     private void Start()
     {
         Application.targetFrameRate = 120;
-
-        if (_replayBtn != null) _replayBtn.onClick.AddListener(Restart);
-        if (_backMenuBtn != null) _backMenuBtn.onClick.AddListener(BackToMainMenu);
+        _gameState = GameState.MainMenu;
     }
 
-    private void DoTransition(Action action)
+    private void DoTransition(Action changeGameScene, Action startGame = null)
     {
         _loading.localScale = Vector3.zero;
         _loading.gameObject.SetActive(true);
+
+        _gameState = GameState.Loading;
 
         Sequence seq = DOTween.Sequence();
 
         seq.Append(_loading.DOScale(2f, _timeLoading).SetEase(Ease.OutQuad));
 
         seq.AppendCallback(() => {
-            action?.Invoke();
+            changeGameScene?.Invoke();
         });
 
         seq.Append(_loading.DOScale(0f, _timeLoading).SetEase(Ease.InQuad));
 
-        seq.OnComplete(() => _loading.gameObject.SetActive(false));
+        seq.OnComplete(() =>
+        {
+            _loading.gameObject.SetActive(false);
+            if (startGame != null)
+            {
+                startGame.Invoke();
+                _gameState = GameState.InGame;
+            }
+        });
         seq.SetUpdate(true);
     }
 
     public void OpenGame(GameObject game)
     {
         AudioManager.Instance.PlaySoundButtonClick();
+        if (game == null)
+        {
+            OpenNotificationUpdateGame();
+            return;
+        } 
+
         DoTransition(() =>
         {
             _uiMainMenu.SetActive(false);
@@ -70,13 +87,15 @@ public class MainGameManager : Singleton<MainGameManager>
 
             _curGameManager = _currentGame.GetComponentInChildren<IGameManager>();
 
+            AudioManager.Instance.StopMusic();
+        }, () => 
+        {
             if (_curGameManager != null)
             {
                 _curGameManager.StartNewGame();
             }
-
-            AudioManager.Instance.StopMusic();
         });
+            
     }
 
     public void Restart()
@@ -93,6 +112,7 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         DoTransition(() =>
         {
+            ShowScore(false);
             _uiInGame.SetActive(false);
             _uiMainMenu.SetActive(true);
 
@@ -106,6 +126,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
             AudioManager.Instance.PlayMusicInMenu();
         });
+        _gameState = GameState.MainMenu;
     }
 
     public void ShowScore(bool isShow)
@@ -126,6 +147,20 @@ public class MainGameManager : Singleton<MainGameManager>
         AudioManager.Instance.PlaySoundClick();
         _settingPopup.SetActive(false);
         _uiListGame.SetActive(true);
+    }
+
+    public void OpenNotificationUpdateGame()
+    {
+        AudioManager.Instance.PlaySoundClick();
+        _notificationUpdateGamePopup.SetActive(true);
+        _notificationUpdateGamePopup.transform.localScale = Vector3.zero;
+        _notificationUpdateGamePopup.transform.DOScale(Vector3.one, _timeLoading).SetEase(Ease.OutBack);
+    }
+
+    public void CloseNotificationUpdateGame()
+    {
+        AudioManager.Instance.PlaySoundClick();
+        _notificationUpdateGamePopup.transform.DOScale(Vector3.zero, _timeLoading).SetEase(Ease.InBack).OnComplete(() => _notificationUpdateGamePopup.SetActive(false));
     }
 
     public void CountDown()

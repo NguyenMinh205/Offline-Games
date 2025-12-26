@@ -186,8 +186,24 @@ namespace NguyenQuangMinh.ColorBlock
                     return false;
                 }
             }
-
             return true;
+        }
+
+        public void ResetBoard()
+        {
+            if (grid == null) return;
+
+            for (int x = 0; x < amountRow; x++)
+            {
+                for (int y = 0; y < amountColumn; y++)
+                {
+                    if (grid[x, y] != null)
+                    {
+                        grid[x, y].ClearCell();
+                        grid[x, y].HighlightCell(false);
+                    }
+                }
+            }
         }
 
     }

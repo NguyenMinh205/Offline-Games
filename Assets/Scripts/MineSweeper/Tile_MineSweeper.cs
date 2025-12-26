@@ -59,14 +59,11 @@ namespace NguyenQuangMinh.MineSweeper
             _spriteRenderer.sprite = _unclickedTile;
         }
 
-        private void OnMouseOver()
+        private void OnMouseDown()
         {
             if (!_isRevealed)
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    MineSweeper_GameManager.Instance.HandleTileClick(this);
-                }
+                MineSweeper_GameManager.Instance.HandleTileClick(this);
             }
         }
 

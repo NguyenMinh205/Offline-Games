@@ -19,7 +19,7 @@ namespace NguyenQuangMinh.DOTrescue
 
         private void FixedUpdate()
         {
-            if (DOTrescueGameManager.Instance.IsGameOver) return;
+            if (DOTrescueGameManager.Instance.IsGameOver || MainGameManager.Instance.GameState != GameState.InGame) return;
             transform.Rotate(0f, 0f, _rotateSpeed * Time.fixedDeltaTime);
         }
     }

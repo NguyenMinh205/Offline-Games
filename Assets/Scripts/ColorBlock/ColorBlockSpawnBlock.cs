@@ -15,6 +15,8 @@ namespace NguyenQuangMinh.ColorBlock
 
         public void Init()
         {
+            if (slotPools.Count > 0) return;
+
             foreach (ColorBlockSlot slot in slots)
             {
                 slotPools[slot] = new Dictionary<ColorBlock_Block, Queue<ColorBlock_Block>>();
@@ -89,6 +91,22 @@ namespace NguyenQuangMinh.ColorBlock
             if (allEmpty)
             {
                 Spawn();
+            }
+        }
+
+        public void ReturnAllBlocksToPool()
+        {
+            foreach (ColorBlockSlot slot in slots)
+            {
+                if (!slot.IsEmpty())
+                {
+                    ColorBlock_Block block = slot.GetBlock();
+                    if (block != null)
+                    {
+                        ReturnBlock(slot, block);
+                        slot.ResetSlot();
+                    }
+                }
             }
         }
     }

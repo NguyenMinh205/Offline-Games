@@ -28,13 +28,22 @@ namespace NguyenQuangMinh.MemoryCard
         private int _matchedPairsCount;
         private bool _isProcessing;
 
-        private void Start()
-        {
-            StartNewGame();
-        }
-
         public void StartNewGame()
         {
+            StopAllCoroutines();
+
+            if (_cards != null && _cards.Count > 0)
+            {
+                foreach (var card in _cards)
+                {
+                    if (card != null && card.gameObject != null)
+                    {
+                        card.transform.DOKill();
+                        PoolingManager.Despawn(card.gameObject);
+                    }
+                }
+            }
+
             _cardSprites = new List<Sprite>();
             _cards = new List<Card>();
             _matchedPairsCount = 0;
@@ -49,6 +58,13 @@ namespace NguyenQuangMinh.MemoryCard
             }
 
             RunGame();
+        }
+
+        public void Restart()
+        {
+            StopAllCoroutines();
+
+            StartNewGame();
         }
 
         public void RunGame()
@@ -95,15 +111,6 @@ namespace NguyenQuangMinh.MemoryCard
 
         private IEnumerator CreateCardsRoutine()
         {
-            if (_cards.Count > 0)
-            {
-                foreach (var card in _cards)
-                {
-                    if (card != null) PoolingManager.Despawn(card.gameObject);
-                }
-                _cards.Clear();
-            }
-
             int totalCards = _cardSprites.Count;
             int totalRows = _cardRow.Count;
             int currentCardIndex = 0;
@@ -202,11 +209,6 @@ namespace NguyenQuangMinh.MemoryCard
             {
                 Debug.Log("GAME OVER.");
             }
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

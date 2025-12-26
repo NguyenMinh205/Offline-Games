@@ -12,22 +12,35 @@ namespace NguyenQuangMinh.ColorBlock
         public ColorBoard_BoardManager BoardManager => boardManager;
         [SerializeField] private ColorBlockSpawnBlock spawner;
         public ColorBlockSpawnBlock Spawner => spawner;
+            
         [SerializeField] private int score = 0;
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private float snapDuration = 0.2f;
         public float SnapDuration => snapDuration;
         private const int scorePerLine = 10;
 
-        private void Start()
-        {
-            StartNewGame();
-        }
-
         public void StartNewGame()
         {
             score = 0;
+            SetScoreText();
+
             boardManager.InitializeBoard();
+            boardManager.ResetBoard();
+
             spawner.Init();
+            spawner.ReturnAllBlocksToPool();
+
+            spawner.Spawn();
+        }
+
+        public void Restart()
+        {
+            score = 0;
+            SetScoreText();
+
+            boardManager.ResetBoard();
+            spawner.ReturnAllBlocksToPool();
+
             spawner.Spawn();
         }
 
@@ -50,11 +63,6 @@ namespace NguyenQuangMinh.ColorBlock
         public void GameOver()
         {
             Debug.LogError("GAME OVER! Score: " + score);
-        }
-
-        public void Restart()
-        {
-            StartNewGame();
         }
     }
 }

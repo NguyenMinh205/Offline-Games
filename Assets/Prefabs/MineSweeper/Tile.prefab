@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 765956437
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -769527027, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7109375, y: 0.703125}
+  m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
 --- !u!114 &7653854797059189433
 MonoBehaviour:
@@ -143,11 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed958d573d8ef9246a0a3e9bbe4c83ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unclickedTile: {fileID: -769527027, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
-  mineSprite: {fileID: 677946523, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
-  mineHitSprite: {fileID: -413382906, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
-  flagSprite: {fileID: -1176786932, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
-  numberSprites:
+  _unclickedTile: {fileID: -769527027, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
+  _mineSprite: {fileID: 677946523, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
+  _mineHitSprite: {fileID: -413382906, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
+  _flagSprite: {fileID: -1176786932, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
+  _numberSprites:
   - {fileID: -1380996947, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
   - {fileID: 1008470618, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
   - {fileID: -1357828293, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
@@ -156,5 +156,5 @@ MonoBehaviour:
   - {fileID: -187888827, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
   - {fileID: -1944005153, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
   - {fileID: -1090040710, guid: a8570d08ecd19e74185fcdf202bd8ac2, type: 3}
-  spriteRenderer: {fileID: 6024743884523340327}
-  mineCount: 0
+  _spriteRenderer: {fileID: 6024743884523340327}
+  _mineCount: 0
