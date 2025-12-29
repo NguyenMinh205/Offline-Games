@@ -22,6 +22,7 @@ namespace NguyenQuangMinh.ColorBlock
         public void StartNewGame()
         {
             score = 0;
+            MainGameManager.Instance.ShowScore(true);
             SetScoreText();
 
             boardManager.InitializeBoard();

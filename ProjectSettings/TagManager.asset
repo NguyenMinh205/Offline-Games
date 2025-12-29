@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Obstacle
+  - Line
+  - Fruit
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Cell
-  - 
+  - Fruit
   - 
   - 
   - 
@@ -50,4 +52,7 @@ TagManager:
     locked: 0
   - name: Tile (In Game)
     uniqueID: 765956437
+    locked: 0
+  - name: Fruit
+    uniqueID: 3220997207
     locked: 0
