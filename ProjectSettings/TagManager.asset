@@ -47,6 +47,9 @@ TagManager:
   - name: UI
     uniqueID: 3176990611
     locked: 0
+  - name: Tilemap
+    uniqueID: 1241682257
+    locked: 0
   - name: Particle
     uniqueID: 2459799283
     locked: 0
