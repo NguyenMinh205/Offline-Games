@@ -37,6 +37,8 @@ namespace NguyenQuangMinh.DOTrescue
             _point.SetActive(true);
             _player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             _obstacle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            _player.gameObject.SetActive(true);
+            _obstacle.gameObject.SetActive(true);
             MainGameManager.Instance.ShowScore(true);
             MainGameManager.Instance.CountDown();
         }
@@ -75,6 +77,12 @@ namespace NguyenQuangMinh.DOTrescue
         {
             Debug.Log("Game Over!");
             _isGameOver = true;
+        }
+
+        private void OnDisable()
+        {
+            _player.gameObject.SetActive(false);
+            _obstacle.gameObject.SetActive(false);
         }
     }
 }
