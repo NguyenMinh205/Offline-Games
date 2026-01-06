@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3109229feb6c5ea42a469de8725ace79, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  gridSize: {x: 8, y: 8}
+  dataNodes:
+  - colorType: 1
+    startPos: {x: 2, y: 5}
+    endPos: {x: 6, y: 0}
+  - colorType: 2
+    startPos: {x: 0, y: 7}
+    endPos: {x: 7, y: 5}
+  - colorType: 3
+    startPos: {x: 0, y: 3}
+    endPos: {x: 7, y: 2}
+  - colorType: 4
+    startPos: {x: 5, y: 5}
+    endPos: {x: 7, y: 4}
+  - colorType: 6
+    startPos: {x: 0, y: 4}
+    endPos: {x: 0, y: 6}
+  - colorType: 7
+    startPos: {x: 5, y: 7}
+    endPos: {x: 7, y: 6}
+  - colorType: 8
+    startPos: {x: 1, y: 1}
+    endPos: {x: 7, y: 0}
+  - colorType: 9
+    startPos: {x: 4, y: 5}
+    endPos: {x: 7, y: 3}
