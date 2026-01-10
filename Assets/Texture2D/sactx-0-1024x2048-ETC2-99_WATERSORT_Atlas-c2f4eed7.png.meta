@@ -1,11 +1,9 @@
 fileFormatVersion: 2
 guid: b2b3ac39f7067b340812ebec7ad872d1
-timeCreated: 1755545913
-licenseType: Free
 TextureImporter:
-  serializedVersion: 13
   internalIDToNameTable: []
   externalObjects: {}
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -36,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -82,45 +80,259 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 54
+        width: 395
+        height: 1172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 282f77e6fd3e2ca40897c15df55cc1f9
+      internalID: 402949970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_1
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 378
+        height: 1154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d065172b79d46a4f8d70bf56c60bebe
+      internalID: 1092569168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_2
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 1
+        width: 90
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c691056ce669a774895f3143bb2f3e58
+      internalID: -651593103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1591
+        width: 90
+        height: 220
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 383626d3f59c5a241a29cd2f0e01649a
+      internalID: 1109703941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1369
+        width: 89
+        height: 219
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 188b010375c2fba4bafca77ce0da859b
+      internalID: 955420011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_5
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 1369
+        width: 89
+        height: 219
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34c495d9f8eb4a849a0f1ea9f36eeef8
+      internalID: 527186130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_6
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 1369
+        width: 89
+        height: 219
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee1787ee6fb5cee43b49b5bbe6870010
+      internalID: -976074919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_7
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 1231
+        width: 89
+        height: 220
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e49826c7815b48241ba118da35eeec04
+      internalID: 1450522536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1232
+        width: 300
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ac83cff2e0e3c846a379613f6e45b1d
+      internalID: -1554358234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID:
+    spriteID: b805104fbd5ea9a44a5cb88d416c0d83
     internalID: 0
     vertices: []
-    indices:
+    indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
-  mipmapLimitGroupName:
-  output:
-    textureImportInstructions:
-      compressedFormat: 0
-      uncompressedFormat: 0
-      desiredFormat: 0
-      usageMode: 0
-      colorSpace: 0
-      androidETC2FallbackFormat: 0
-      width: 0
-      height: 0
-      depth: 0
-      cubeIntermediateSize: 0
-      cubeMode: 0
-      cubeLayout: 0
-      compressionQuality: 0
-      androidETC2FallbackDownscale: 0
-      vtOnly: 0
-    sourceTextureInformation:
-      width: 0
-      height: 0
-      doesTextureContainAlpha: 0
-      sourceWasHDR: 0
-    importInspectorWarnings:
+    nameFileIdTable:
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_0: 402949970
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_1: 1092569168
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_2: -651593103
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_3: 1109703941
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_4: 955420011
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_5: 527186130
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_6: -976074919
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_7: 1450522536
+      sactx-0-1024x2048-ETC2-99_WATERSORT_Atlas-c2f4eed7_8: -1554358234
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  userData:
-  assetBundleName:
-  assetBundleVariant:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
