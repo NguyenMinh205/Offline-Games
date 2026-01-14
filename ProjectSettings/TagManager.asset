@@ -62,3 +62,6 @@ TagManager:
   - name: HighlightClick
     uniqueID: 3142507691
     locked: 0
+  - name: Bottle
+    uniqueID: 2974980815
+    locked: 0

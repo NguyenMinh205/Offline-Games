@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8b5fd94c050ba4a95e110aecf70458, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  data:
+  - numOfColorInBottle: 4
+    _colorsBottle:
+    - {fileID: 11400000, guid: e4aa12daa88debd4b81b8ef9b99ee563, type: 2}
+    - {fileID: 11400000, guid: 551292bfd4a76634880e6da8cfd89ae4, type: 2}
+    - {fileID: 11400000, guid: 551292bfd4a76634880e6da8cfd89ae4, type: 2}
+    - {fileID: 11400000, guid: cec7884d562b76646a4a9cc6aafe6c45, type: 2}
+  - numOfColorInBottle: 4
+    _colorsBottle:
+    - {fileID: 11400000, guid: e4aa12daa88debd4b81b8ef9b99ee563, type: 2}
+    - {fileID: 11400000, guid: 551292bfd4a76634880e6da8cfd89ae4, type: 2}
+    - {fileID: 11400000, guid: e4aa12daa88debd4b81b8ef9b99ee563, type: 2}
+    - {fileID: 11400000, guid: c2f3a70a2e128754fa7c2531d9ead4fb, type: 2}
+  - numOfColorInBottle: 4
+    _colorsBottle:
+    - {fileID: 11400000, guid: ed4894f9b5958654faf8d1c3ba9d31e2, type: 2}
+    - {fileID: 11400000, guid: c2f3a70a2e128754fa7c2531d9ead4fb, type: 2}
+    - {fileID: 11400000, guid: 551292bfd4a76634880e6da8cfd89ae4, type: 2}
+    - {fileID: 11400000, guid: ed4894f9b5958654faf8d1c3ba9d31e2, type: 2}
+  - numOfColorInBottle: 4
+    _colorsBottle:
+    - {fileID: 11400000, guid: cec7884d562b76646a4a9cc6aafe6c45, type: 2}
+    - {fileID: 11400000, guid: c2f3a70a2e128754fa7c2531d9ead4fb, type: 2}
+    - {fileID: 11400000, guid: e4aa12daa88debd4b81b8ef9b99ee563, type: 2}
+    - {fileID: 11400000, guid: ed4894f9b5958654faf8d1c3ba9d31e2, type: 2}
+  - numOfColorInBottle: 4
+    _colorsBottle:
+    - {fileID: 11400000, guid: cec7884d562b76646a4a9cc6aafe6c45, type: 2}
+    - {fileID: 11400000, guid: c2f3a70a2e128754fa7c2531d9ead4fb, type: 2}
+    - {fileID: 11400000, guid: cec7884d562b76646a4a9cc6aafe6c45, type: 2}
+    - {fileID: 11400000, guid: ed4894f9b5958654faf8d1c3ba9d31e2, type: 2}
+  - numOfColorInBottle: 0
+    _colorsBottle: []
+  - numOfColorInBottle: 0
+    _colorsBottle: []
