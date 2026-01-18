@@ -89,6 +89,7 @@ namespace NguyenQuangMinh.MineSweeper
             if (_isMine)
             {
                 _spriteRenderer.sprite = _mineHitSprite;
+                AudioManager.Instance.PlayMinesweeperExplosion();
                 MineSweeper_GameManager.Instance.GameOver();
                 return;
             }

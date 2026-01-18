@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -159,6 +160,7 @@ namespace NguyenQuangMinh.MineSweeper
 
             if (_isFlagMode)
             {
+                AudioManager.Instance.PlayMinesweeperTileClick();
                 bool nowFlagged = !tile.IsFlagged;
                 if (nowFlagged)
                 {
@@ -193,6 +195,7 @@ namespace NguyenQuangMinh.MineSweeper
 
                 RevealEmptyRegionBFS(index);
             }
+            AudioManager.Instance.PlayMinesweeperTileExpand();
             CheckWinCondition();
         }
 
@@ -243,6 +246,11 @@ namespace NguyenQuangMinh.MineSweeper
                 if (t.IsMine && !t.IsFlagged && !t.IsRevealed)
                 {
                     t.ShowMineSprite();
+                    AudioManager.Instance.PlayMinesweeperExplosion();
+                    DOVirtual.DelayedCall(0.25f, () =>
+                    {
+                        Debug.Log("Next mine");
+                    });
                 }
             }
 

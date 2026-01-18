@@ -85,6 +85,7 @@ namespace NguyenQuangMinh.MemoryCard
             if (_isSelected || _isMatched || _isFlipping) return;
 
             MemoryCardGameManager.Instance.SetSelect(this);
+            AudioManager.Instance.PlayCardFlipSound();
         }
     }
 }

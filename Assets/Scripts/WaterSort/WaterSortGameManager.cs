@@ -63,10 +63,8 @@ namespace NguyenQuangMinh.WaterSort
             if (isActive)
             {
                 _waterLineRenderer.gameObject.SetActive(true);
-
                 _waterLineRenderer.startColor = color;
                 _waterLineRenderer.endColor = color;
-
                 _waterLineRenderer.SetPosition(0, startPos);
                 _waterLineRenderer.SetPosition(1, endPos);
             }
@@ -131,17 +129,25 @@ namespace NguyenQuangMinh.WaterSort
 
             if (raycast2D.collider != null && raycast2D.collider.TryGetComponent<BottleController>(out BottleController hit))
             {
+                if (hit.IsCompleted) return;
+
                 if (_chosenBottle == null)
                 {
                     if (hit.NumOfColorInBottle > 0)
                     {
+                        AudioManager.Instance.PlayWaterSortSelectedBottleSound();
                         _chosenBottle = hit;
+
+                        _chosenBottle.SetSelected(true);
                     }
                 }
                 else
                 {
                     if (_chosenBottle == hit)
                     {
+                        AudioManager.Instance.PlayWaterSortUnselectedBottleSound();
+
+                        _chosenBottle.SetSelected(false);
                         _chosenBottle = null;
                     }
                     else
@@ -159,17 +165,22 @@ namespace NguyenQuangMinh.WaterSort
                         }
                         else
                         {
+                            AudioManager.Instance.PlayWaterSortUnselectedBottleSound();
+                            _chosenBottle.SetSelected(false);
+
                             _chosenBottle = null;
                             _targetBottle = null;
                         }
-                        _chosenBottle = null;
-                        _targetBottle = null;
                     }
                 }
             }
             else
             {
-                if (_chosenBottle != null) _chosenBottle = null;
+                if (_chosenBottle != null)
+                {
+                    _chosenBottle.SetSelected(false);
+                    _chosenBottle = null;
+                }
             }
         }
 
@@ -187,29 +198,10 @@ namespace NguyenQuangMinh.WaterSort
             {
                 if (bottle.NumOfColorInBottle == 0) continue;
 
-                if (bottle.NumOfColorInBottle != 4)
+                if (!bottle.IsCompleted)
                 {
                     isAllCompleted = false;
                     break;
-                }
-                else
-                {
-                    BottleColorSO firstColor = bottle.ColorLayers[0];
-                    bool sameColor = true;
-                    for (int i = 1; i < bottle.ColorLayers.Count; i++)
-                    {
-                        if (bottle.ColorLayers[i] != firstColor)
-                        {
-                            sameColor = false;
-                            break;
-                        }
-                    }
-
-                    if (!sameColor)
-                    {
-                        isAllCompleted = false;
-                        break;
-                    }
                 }
             }
 

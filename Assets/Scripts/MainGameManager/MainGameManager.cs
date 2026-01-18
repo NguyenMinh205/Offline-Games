@@ -25,7 +25,18 @@ public class MainGameManager : Singleton<MainGameManager>
     [SerializeField] private TextMeshProUGUI _highScoreTxt;
     [SerializeField] private Button _backMenuBtn;
     [SerializeField] private Button _replayBtn;
-    
+
+    [Header("UI Win Lose")]
+    [SerializeField] private GameObject _winUI;
+    [SerializeField] private Image _winIcon;
+    [SerializeField] private TextMeshProUGUI _winTxt;
+    [SerializeField] private GameObject _loseUI;
+    [SerializeField] private TextMeshProUGUI _loseTxt;
+    [SerializeField] private GameObject _buttonsUI;
+    [SerializeField] private Button _backHomeBtn;
+    [SerializeField] private Button _playAgainBtn;
+    [SerializeField] private Button _nextLevelBtn;
+
     private GameObject _currentGame;
     public GameObject CurrentGame => _currentGame;
     private IGameManager _curGameManager;
@@ -101,7 +112,7 @@ public class MainGameManager : Singleton<MainGameManager>
     public void Restart()
     {
         if (_curGameManager == null) return;
-
+        AudioManager.Instance.PlaySoundButtonClick();
         DoTransition(() =>
         {
             _curGameManager.Restart();
@@ -110,6 +121,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public void BackToMainMenu()
     {
+        AudioManager.Instance.PlaySoundButtonClick();
         DoTransition(() =>
         {
             ShowScore(false);
@@ -190,5 +202,43 @@ public class MainGameManager : Singleton<MainGameManager>
     public void UpdateHighScore(int score)
     {
         if (_highScoreTxt != null) _highScoreTxt.text = score.ToString();
+    }
+
+    public void ShowButtonUI(bool hasNextLevel, Action nextLevel = null)
+    {
+        if (_buttonsUI == null) return;
+        _buttonsUI.SetActive(true);
+        _nextLevelBtn.gameObject.SetActive(hasNextLevel);
+        _backHomeBtn.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        _playAgainBtn.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        if (hasNextLevel)
+        {
+            _nextLevelBtn.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+            _nextLevelBtn.onClick.RemoveAllListeners();
+            _nextLevelBtn.onClick.AddListener(() =>
+            {
+                AudioManager.Instance.PlaySoundButtonClick();
+                nextLevel?.Invoke();
+            });
+        }
+    }    
+
+    public void ShowWinUI(bool hasNextLevel, Action nextLevel = null)
+    {
+        if (_winUI == null) return;
+        _winUI.SetActive(true);
+        AudioManager.Instance.PlaySoundWin();
+        _winIcon.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        _winTxt.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        ShowButtonUI(hasNextLevel, nextLevel);
+    }   
+    
+    public void ShowLoseUI()
+    {
+        if (_loseUI == null) return;
+        _loseUI.SetActive(true);
+        AudioManager.Instance.PlaySoundLose();
+        _loseTxt.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        ShowButtonUI(false);
     }
 }

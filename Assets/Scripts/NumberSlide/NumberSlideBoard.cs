@@ -109,6 +109,7 @@ namespace NguyenQuangMinh.NumberSlide
             if (isMove)
             {
                 _isAnimating = true;
+                AudioManager.Instance.PlayNumberSlideSound();
 
                 foreach (var tile in _activeTiles)
                 {
@@ -176,6 +177,7 @@ namespace NguyenQuangMinh.NumberSlide
 
         public void MergeTiles(NumberSlideTile tileA, NumberSlideTile tileB)
         {
+            AudioManager.Instance.PlayNumberMergeSound();
             _activeTiles.Remove(tileA);
             tileA.Merge(tileB.Cell);
 

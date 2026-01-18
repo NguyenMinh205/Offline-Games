@@ -12,7 +12,7 @@ namespace NguyenQuangMinh.DOTrescue
         {
             if (Input.GetMouseButtonDown(0))
             {
-                DOTrescueSoundManager.Instance.PlayMoveSound();
+                AudioManager.Instance.PlayDotMoveSound();
                 _rotateSpeed *= -1f;
             }
         }

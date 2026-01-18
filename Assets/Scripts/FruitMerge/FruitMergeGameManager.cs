@@ -85,7 +85,7 @@ namespace NguyenQuangMinh.FruitMerge
 
         private void Update()
         {
-            if (_isLose) return;
+            if (_isLose && isDelay) return;
             if (Input.GetMouseButtonDown(0))
             {
                 OnClick();
@@ -135,6 +135,7 @@ namespace NguyenQuangMinh.FruitMerge
             }
 
             scoreLine.SetActive(false);
+            AudioManager.Instance.PlayFruitDropSound();
             isDelay = true;
             canSwipe = false;
 
@@ -165,6 +166,7 @@ namespace NguyenQuangMinh.FruitMerge
         {
             if (_isLose) return;
             _curFruit = PoolingManager.Spawn(model.DataFruit[indexNextFruit], objectSpawn.position, Quaternion.identity, objectSpawn);
+            AudioManager.Instance.PlayFruitSpawnSound();
             _curFruit.Init(indexNextFruit, MergeFruit, GameOver);
             _curFruit.transform.localScale = Vector3.zero;
             _curFruit.transform.DOScale(Vector3.one, 0.2f);
@@ -181,6 +183,7 @@ namespace NguyenQuangMinh.FruitMerge
             {
                 ParticleSystem effect = PoolingManager.Spawn(effectMerge, newPosSpawn, Quaternion.identity, objectPool);
                 effect.Play();
+                AudioManager.Instance.PlayFruitMergeSound();
                 DOVirtual.DelayedCall(1.25f, () => PoolingManager.Despawn(effect.gameObject));
             }
 

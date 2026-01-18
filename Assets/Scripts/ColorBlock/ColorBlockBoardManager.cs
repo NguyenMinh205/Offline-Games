@@ -66,6 +66,11 @@ namespace NguyenQuangMinh.ColorBlock
             if (totalCleared > 0)
             {
                 GameManager_ColorBlocks.Instance.AddScore(totalCleared);
+                AudioManager.Instance.PlayColorBlockClearSound();
+            }
+            else
+            {
+                AudioManager.Instance.PlayColorBlockPlaceSound();
             }
 
             GameManager_ColorBlocks.Instance.Spawner.CheckAndSpawn();

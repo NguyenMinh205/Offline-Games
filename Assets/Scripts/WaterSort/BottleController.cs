@@ -16,6 +16,9 @@ namespace NguyenQuangMinh.WaterSort
         [SerializeField] private float _timeRotateBottle;
         [SerializeField] private float _moveSpeedMultiplier = 2.0f;
 
+        [Tooltip("Khoảng cách bình nhảy lên khi được chọn")]
+        [SerializeField] private float _selectMoveUpAmount = 0.5f;
+
         [Header("References")]
         [SerializeField] private SpriteRenderer _bottleSR;
         [SerializeField] private Transform _waterTargetPoint;
@@ -50,6 +53,9 @@ namespace NguyenQuangMinh.WaterSort
         private Vector3 _startPos;
         private Vector3 _endPos;
 
+        private bool _isCompleted = false;
+        public bool IsCompleted => _isCompleted;
+
         public void SetupBottle(DataWaterSortObject bottleData)
         {
             transform.rotation = Quaternion.identity;
@@ -63,12 +69,17 @@ namespace NguyenQuangMinh.WaterSort
 
             _colorLayers = new List<BottleColorSO>(bottleData._colorsBottle);
             Init();
+
+            SilentCheckCompleteState();
         }
 
         public void Init()
         {
             _originalPos = transform.position;
-            _bottleSR.material.SetFloat("_FillAmount", _fillAmountBottle[_numOfColorInBottle]);
+            if (_fillAmountBottle.Count > _numOfColorInBottle && _numOfColorInBottle >= 0)
+            {
+                _bottleSR.material.SetFloat("_FillAmount", _fillAmountBottle[_numOfColorInBottle]);
+            }
             UpdateColor();
             SetTopColorValue();
         }
@@ -147,6 +158,71 @@ namespace NguyenQuangMinh.WaterSort
             return false;
         }
 
+        public void CheckCompleteState()
+        {
+            if (_numOfColorInBottle != 4)
+            {
+                _isCompleted = false;
+                return;
+            }
+
+            BottleColorSO firstColor = _colorLayers[0];
+            bool sameColor = true;
+            for (int i = 1; i < _colorLayers.Count; i++)
+            {
+                if (_colorLayers[i] != firstColor)
+                {
+                    sameColor = false;
+                    break;
+                }
+            }
+
+            if (sameColor)
+            {
+                if (!_isCompleted)
+                {
+                    _isCompleted = true;
+                    if (AudioManager.Instance != null)
+                        AudioManager.Instance.PlayWaterSortCompleteBottleSound();
+                }
+            }
+            else
+            {
+                _isCompleted = false;
+            }
+        }
+
+        private void SilentCheckCompleteState()
+        {
+            if (_numOfColorInBottle != 4)
+            {
+                _isCompleted = false;
+                return;
+            }
+            BottleColorSO firstColor = _colorLayers[0];
+            bool sameColor = true;
+            for (int i = 1; i < _colorLayers.Count; i++)
+            {
+                if (_colorLayers[i] != firstColor)
+                {
+                    sameColor = false; break;
+                }
+            }
+            _isCompleted = sameColor;
+        }
+
+        public void SetSelected(bool isSelected)
+        {
+            if (isSelected)
+            {
+                transform.position = _originalPos + Vector3.up * _selectMoveUpAmount;
+            }
+            else
+            {
+                transform.position = _originalPos;
+            }
+        }
+
         public void CalculateRotationIndex(int numOfEmptySpaceInSecondBottle)
         {
             int val = _numOfColorInBottle - Mathf.Min(numOfEmptySpaceInSecondBottle, _numOfTopColorLayer);
@@ -175,6 +251,7 @@ namespace NguyenQuangMinh.WaterSort
         public IEnumerator RotateBottleDown()
         {
             float time = 0, lerpValue, angleValue, lastAngleValue = 0;
+            AudioManager.Instance.PlayWaterSortPouringSound();
 
             while (time < _timeRotateBottle)
             {
@@ -217,6 +294,8 @@ namespace NguyenQuangMinh.WaterSort
             if (_numOfColorInBottle < 0) _numOfColorInBottle = 0;
 
             UpdateColor();
+
+            _bottleControllerRef.CheckCompleteState();
 
             WaterSortGameManager.Instance.UpdateWaterLine(false);
 
@@ -264,7 +343,8 @@ namespace NguyenQuangMinh.WaterSort
 
         public IEnumerator MoveBottle()
         {
-            _startPos = _originalPos;
+            _startPos = transform.position;
+
             if (_chosenRotationPoint == _leftRotationPoint)
             {
                 _endPos = _bottleControllerRef.RightRotationPoint.position;

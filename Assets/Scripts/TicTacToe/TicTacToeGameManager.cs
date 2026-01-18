@@ -123,6 +123,14 @@ namespace NguyenQuangMinh.TicTacToe
 
         private void ProcessTurn(Turn turn, int selectedCell)
         {
+            if (turn == Turn.Player)
+            {
+                AudioManager.Instance.PlayTicTacToePlayerClick();
+            }
+            else
+            {
+                AudioManager.Instance.PlayTicTacToeEnemyClick();
+            }
             CellState state = (turn == Turn.Player) ? _playerState : _botState;
             _gridManager.SetSpecificCell(state, selectedCell);
 
@@ -308,6 +316,7 @@ namespace NguyenQuangMinh.TicTacToe
                     if (_winLineManager != null)
                     {
                         _winLineManager.SetWinLine(_winLineTypes[i]);
+                        AudioManager.Instance.PlayTicTacToeFinishGame();
                     }
                     return true;
                 }

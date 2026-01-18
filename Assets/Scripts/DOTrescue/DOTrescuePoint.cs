@@ -14,7 +14,7 @@ namespace NguyenQuangMinh.DOTrescue
         {
             if (collision.gameObject.CompareTag("Obstacle"))
             {
-                DOTrescueSoundManager.Instance.PlayLoseSound();
+                AudioManager.Instance.PlayDotColliderSound();
                 GameObject explosion = Instantiate(_explosionPrefab, this.transform.position, Quaternion.identity);
                 this.gameObject.SetActive(false);
                 DOTrescueGameManager.Instance.GameOver();

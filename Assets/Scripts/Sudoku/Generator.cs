@@ -15,8 +15,8 @@ namespace NguyenQuangMinh.Sudoku
     {
         private const int BOARD_SIZE = 9;
         private const int SUBGRID_SIZE = 3;
-        private const int MIN_CELL_EMPTY = 15;
-        private const int MAX_CELL_EMPTY = 45;
+        private const int MIN_CELL_EMPTY = 30;
+        private const int MAX_CELL_EMPTY = 60;
 
         private static readonly Random rnd = new Random();
 

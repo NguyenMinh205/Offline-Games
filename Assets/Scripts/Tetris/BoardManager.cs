@@ -129,6 +129,7 @@ namespace NguyenQuangMinh.Tetris
             if (linesCleared > 0)
             {
                 TetrisGameManager.Instance.AddScore(linesCleared);
+                AudioManager.Instance.PlayTetrisClearRowSound();
             }
         }
 

@@ -83,6 +83,7 @@ namespace NguyenQuangMinh.Wordle
             if (!isInteracting || currentRow >= _rows.Count) return;
             if (currentColumn >= _rows[currentRow].Tiles.Count) return;
 
+            AudioManager.Instance.PlayWordleClickSound();
             Wordle_Tile tile = _rows[currentRow].Tiles[currentColumn];
             tile.SetLetter(letter[0]);
             tile.SetState(occupiedState);
@@ -95,6 +96,7 @@ namespace NguyenQuangMinh.Wordle
             if (!isInteracting || currentRow >= _rows.Count) return;
             if (currentColumn <= 0) return;
 
+            AudioManager.Instance.PlayWordleClickSound();
             currentColumn--;
             Wordle_Tile tile = _rows[currentRow].Tiles[currentColumn];
             tile.ResetTile(emptyState);
@@ -109,7 +111,6 @@ namespace NguyenQuangMinh.Wordle
                 ShakeRow(currentRow);
                 return;
             }
-
             string guess = GetCurrentGuess();
 
             if (!validWords.Contains(guess))
@@ -119,6 +120,7 @@ namespace NguyenQuangMinh.Wordle
                 return;
             }
 
+            AudioManager.Instance.PlayWordleSubmitSound();
             isInteracting = false;
             List<State> resultStates = EvaluateGuess(guess, currentSolution);
 
@@ -166,6 +168,7 @@ namespace NguyenQuangMinh.Wordle
 
         private void ShakeRow(int rowIndex)
         {
+            AudioManager.Instance.PlayWordleErrorSound();
             _rows[rowIndex].transform.DOShakePosition(0.5f, new Vector3(15, 0, 0), 20, 90, false, true);
         }
 

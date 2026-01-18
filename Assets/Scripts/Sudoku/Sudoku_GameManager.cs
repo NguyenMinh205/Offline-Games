@@ -71,6 +71,7 @@ namespace NguyenQuangMinh.Sudoku
             }
 
             this._selectedCell = clickedCell;
+            AudioManager.Instance.PlaySudokuCellClickSound();
             Highlight();
             _selectedCell.Select();
         }    
@@ -152,19 +153,29 @@ namespace NguyenQuangMinh.Sudoku
         {
             int row = _selectedCell.Row;
             int col = _selectedCell.Column;
+            bool isCorrect = true;
 
             ClearErrorInArea(row, col);
 
-            CheckLineForConflicts(row, true);
+            isCorrect = isCorrect && CheckLineForConflicts(row, true);
 
-            CheckLineForConflicts(col, false);
+            isCorrect = isCorrect && CheckLineForConflicts(col, false);
 
             int subRow = (row / 3) * 3;
             int subCol = (col / 3) * 3;
-            CheckSubgridForConflicts(subRow, subCol);
+            isCorrect = isCorrect && CheckSubgridForConflicts(subRow, subCol);
             ResetDefault(_selectedCell);
             Highlight();
             if (_selectedCell != null) _selectedCell.Select();
+
+            if (!isCorrect)
+            {
+                AudioManager.Instance.PlaySudokuNumberWrongSound();
+            }
+            else
+            {
+                AudioManager.Instance.PlaySudokuNumberCorrectSound();
+            }
         }
 
         public void ClearErrorInArea(int row, int col)
@@ -182,8 +193,9 @@ namespace NguyenQuangMinh.Sudoku
                     cells[r, c].IsIncorrect = false;
         }
 
-        private void CheckLineForConflicts(int index, bool isRow)
+        private bool CheckLineForConflicts(int index, bool isRow)
         {
+            bool hasConflict = false;
             for (int i = 0; i < 9; i++)
             {
                 int r = isRow ? index : i;
@@ -192,12 +204,15 @@ namespace NguyenQuangMinh.Sudoku
                 {
                     cells[r, c].IsIncorrect = true;
                     cells[_selectedCell.Row, _selectedCell.Column].IsIncorrect = true;
+                    hasConflict = true;
                 }
             }
+            return hasConflict;
         }
 
-        private void CheckSubgridForConflicts(int startRow, int startCol)
+        private bool CheckSubgridForConflicts(int startRow, int startCol)
         {
+            bool hasConflict = false;
             for (int r = startRow; r < startRow + 3; r++)
             {
                 for (int c = startCol; c < startCol + 3; c++)
@@ -206,9 +221,11 @@ namespace NguyenQuangMinh.Sudoku
                     {
                         cells[r, c].IsIncorrect = true;
                         cells[_selectedCell.Row, _selectedCell.Column].IsIncorrect = true;
+                        hasConflict = true;
                     }
                 }
             }
+            return hasConflict;
         }
 
         public void CheckWin()

@@ -70,6 +70,7 @@ namespace NguyenQuangMinh.SlidingPuzzle
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             if (hit.collider != null)
             {
+                AudioManager.Instance.PlaySlidingTileMoveSound();
                 int clickedIndex = _pieces.IndexOf(hit.transform.gameObject);
                 if (clickedIndex != -1)
                 {

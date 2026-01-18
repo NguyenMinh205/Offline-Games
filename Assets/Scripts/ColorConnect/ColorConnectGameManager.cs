@@ -232,6 +232,7 @@ namespace NguyenQuangMinh.ColorConnect
                 if (_isDragging)
                 {
                     _isDragging = false;
+                    AudioManager.Instance.PlayColorConnectLineSound();
                     CheckWinCondition();
                 }
             }

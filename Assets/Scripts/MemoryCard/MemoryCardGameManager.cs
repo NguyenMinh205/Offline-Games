@@ -142,6 +142,7 @@ namespace NguyenQuangMinh.MemoryCard
                         if (currentCardIndex >= totalCards) break;
 
                         Card newCard = PoolingManager.Spawn(cardPrefab, Vector3.zero, Quaternion.identity, currentRow);
+                        AudioManager.Instance.PlayCardPlaceSound();
 
                         newCard.ResetCard();
                         newCard.SetCardSprite(_cardSprites[currentCardIndex]);
@@ -186,6 +187,7 @@ namespace NguyenQuangMinh.MemoryCard
 
             if (card1.CardSprite == card2.CardSprite)
             {
+                AudioManager.Instance.PlayCardMatchSound();
                 card1.SetMatched();
                 card2.SetMatched();
 

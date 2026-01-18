@@ -187,6 +187,7 @@ namespace NguyenQuangMinh.Tetris
 
         private void Lock()
         {
+            AudioManager.Instance.PlayTetrisDropSound();
             BoardManager.Instance.SetPiece(this);
             BoardManager.Instance.ClearLines();
             BoardManager.Instance.SpawnPiece();
