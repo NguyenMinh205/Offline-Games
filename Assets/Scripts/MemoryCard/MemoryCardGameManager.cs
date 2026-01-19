@@ -209,7 +209,10 @@ namespace NguyenQuangMinh.MemoryCard
         {
             if (_matchedPairsCount >= numOfPairs)
             {
-                Debug.Log("GAME OVER.");
+                DOVirtual.DelayedCall(1f, delegate
+                {
+                    MainGameManager.Instance.ShowWinUI(false);
+                });
             }
         }
     }

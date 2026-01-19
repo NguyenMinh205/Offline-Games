@@ -208,16 +208,13 @@ namespace NguyenQuangMinh.WaterSort
             if (isAllCompleted)
             {
                 Debug.Log("WIN LEVEL!");
-                StartCoroutine(NextLevelRoutine());
+                _isGameActive = false;
+                MainGameManager.Instance.ShowWinUI(true, () =>
+                {
+                    _currentLevelIndex++;
+                    LoadLevel(_currentLevelIndex);
+                });
             }
-        }
-
-        private IEnumerator NextLevelRoutine()
-        {
-            _isGameActive = false;
-            yield return new WaitForSeconds(1.5f);
-            _currentLevelIndex++;
-            LoadLevel(_currentLevelIndex);
         }
     }
 }

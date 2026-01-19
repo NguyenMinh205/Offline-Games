@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NguyenQuangMinh.MemoryCard;
 using System.Collections;
 using System.Collections.Generic;
@@ -276,6 +277,11 @@ namespace NguyenQuangMinh.SlidingPuzzle
             {
                 _pieces[_emptyLocation].SetActive(true);
             }
+
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowWinUI(false);
+            });
         }
 
         private void SetFinishImage(Sprite sprite)

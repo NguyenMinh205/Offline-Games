@@ -44,7 +44,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
+  - name: UI (Background)
     uniqueID: 3176990611
     locked: 0
   - name: Tilemap
@@ -64,4 +64,7 @@ TagManager:
     locked: 0
   - name: Bottle
     uniqueID: 2974980815
+    locked: 0
+  - name: UI (EndGame)
+    uniqueID: 94257323
     locked: 0

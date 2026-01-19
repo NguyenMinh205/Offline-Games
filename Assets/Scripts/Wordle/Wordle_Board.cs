@@ -149,6 +149,10 @@ namespace NguyenQuangMinh.Wordle
                 if (guess == currentSolution)
                 {
                     Debug.Log("YOU WIN!");
+                    DOVirtual.DelayedCall(1f, () =>
+                    {
+                        MainGameManager.Instance.ShowWinUI(false);
+                    });
                 }
                 else
                 {
@@ -156,6 +160,10 @@ namespace NguyenQuangMinh.Wordle
                     currentColumn = 0;
                     if (currentRow >= _rows.Count)
                     {
+                        DOVirtual.DelayedCall(1f, () =>
+                        {
+                            MainGameManager.Instance.ShowLoseUI();
+                        });
                         Debug.Log("GAME OVER: " + currentSolution);
                     }
                     else

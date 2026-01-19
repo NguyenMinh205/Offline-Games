@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -19,7 +20,8 @@ namespace NguyenQuangMinh.Tetris
             Score = 0;
             IsGameOver = false;
             MainGameManager.Instance.ShowScore(true);
-            UpdateScoreUI();
+            MainGameManager.Instance.UpdateCurScore(Score);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.TetrisHighScore);
             _boardManager.StartNewGame();
         }
 
@@ -31,19 +33,28 @@ namespace NguyenQuangMinh.Tetris
         public void GameOver()
         {
             IsGameOver = true;
-            Debug.Log("Game Over!");
+            SetHighScore();
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowGameOverUI(Mathf.FloorToInt(Score));
+            });
         }
 
         public void AddScore(int linesCleared)
         {
             Score += linesCleared * (linesCleared * linesCleared) * 10;
-            UpdateScoreUI();
+            MainGameManager.Instance.UpdateCurScore(Score);
         }
 
-        private void UpdateScoreUI()
+        public void SetHighScore()
         {
-            if (_scoreTxt != null)
-                _scoreTxt.text = Score.ToString();
+            if (Score <= DataManager.Instance.GameData.TetrisHighScore)
+            {
+                return;
+            }
+            DataManager.Instance.GameData.TetrisHighScore = Score;
+            DataManager.Instance.GameData.Save();
+            MainGameManager.Instance.SetHighScore(Score);
         }
     }
 }

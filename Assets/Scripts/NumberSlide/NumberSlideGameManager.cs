@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NguyenQuangMinh.MemoryCard;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,18 +12,16 @@ namespace NguyenQuangMinh.NumberSlide
     public class NumberSlideGameManager : Singleton<NumberSlideGameManager>, IGameManager
     {
         [SerializeField] private NumberSlideBoard _board;
-        [SerializeField] private GameObject _scoreUI;
-        [SerializeField] private GameObject _highScoreUI;
-        [SerializeField] private TextMeshProUGUI scoreText;
-        [SerializeField] private TextMeshProUGUI highScoreText;
 
         private int _currentScore = 0;
-        private int _highScore = 0;
 
         public void StartNewGame()
         {
             _currentScore = 0;
-            SetScore();
+
+            MainGameManager.Instance.ShowScore(true);
+            MainGameManager.Instance.SetCurScore(_currentScore);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.NumberSlideHighScore);
 
             _board.StartNewGame();
         }
@@ -35,33 +34,27 @@ namespace NguyenQuangMinh.NumberSlide
         public void GameOver()
         {
             SetHighScore();
-            Debug.Log("GameEnd");
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowGameOverUI(_currentScore);
+            });
         }
 
         public void PlusScore(int points)
         {
             _currentScore += points;
-            SetScore();
-        }
-
-        private void SetScore()
-        {
-            scoreText.text = _currentScore.ToString();
-        }
-
-        private void UpdateHighScoreUI()
-        {
-            highScoreText.text = _highScore.ToString();
+            MainGameManager.Instance.SetCurScore(_currentScore);
         }
 
         private void SetHighScore()
         {
-            if (_currentScore <= _highScore)
+            if (_currentScore <= DataManager.Instance.GameData.NumberSlideHighScore)
             {
                 return;
             }
-            _highScore = _currentScore;
-            UpdateHighScoreUI();
+            DataManager.Instance.GameData.NumberSlideHighScore = _currentScore;
+            DataManager.Instance.GameData.Save();
+            MainGameManager.Instance.SetHighScore(_currentScore);
         }
     }
 }

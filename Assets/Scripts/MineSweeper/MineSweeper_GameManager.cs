@@ -246,15 +246,14 @@ namespace NguyenQuangMinh.MineSweeper
                 if (t.IsMine && !t.IsFlagged && !t.IsRevealed)
                 {
                     t.ShowMineSprite();
-                    AudioManager.Instance.PlayMinesweeperExplosion();
-                    DOVirtual.DelayedCall(0.25f, () =>
-                    {
-                        Debug.Log("Next mine");
-                    });
                 }
             }
+            AudioManager.Instance.PlayMinesweeperExplosion();
 
-            Debug.Log("Game Over!");
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowLoseUI();
+            });
         }
 
         private void CheckWinCondition()
@@ -263,7 +262,6 @@ namespace NguyenQuangMinh.MineSweeper
             if (revealedCount >= totalSafe && !isGameOver)
             {
                 isGameOver = true;
-                Debug.Log("You Win!");
                 for (int i = 0; i < _tiles.Count; i++)
                 {
                     var t = _tiles[i];
@@ -272,6 +270,11 @@ namespace NguyenQuangMinh.MineSweeper
                         t.ShowMineSprite();
                     }
                 }
+
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    MainGameManager.Instance.ShowWinUI(false);
+                });
             }
         }
     }

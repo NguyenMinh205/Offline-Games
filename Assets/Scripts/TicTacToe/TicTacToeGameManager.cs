@@ -331,7 +331,13 @@ namespace NguyenQuangMinh.TicTacToe
 
             if (_turnText)
                 _turnText.text = (turn == Turn.Player ? "YOU WIN!" : "BOT WINS!");
-            Debug.Log(turn == Turn.Player ? "Player Win" : "Bot Win");
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                if (turn == Turn.Player)
+                    MainGameManager.Instance.ShowWinUI(false);
+                else
+                    MainGameManager.Instance.ShowLoseUI();
+            });
         }
     }
 

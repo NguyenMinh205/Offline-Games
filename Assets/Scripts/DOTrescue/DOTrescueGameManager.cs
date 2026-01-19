@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -33,13 +34,14 @@ namespace NguyenQuangMinh.DOTrescue
             if (_levelSpeed.Count > 0)
                 _scoreSpeed = _levelSpeed[_curLevelIndex];
 
-            UpdateScoreText();
             _point.SetActive(true);
             _player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             _obstacle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             _player.gameObject.SetActive(true);
             _obstacle.gameObject.SetActive(true);
             MainGameManager.Instance.ShowScore(true);
+            MainGameManager.Instance.UpdateCurScore((int)_score);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.DotRescueHighScore);
             MainGameManager.Instance.CountDown();
         }
 
@@ -53,7 +55,7 @@ namespace NguyenQuangMinh.DOTrescue
             if (_isGameOver || MainGameManager.Instance.GameState != GameState.InGame) return;
 
             _score += _scoreSpeed * Time.deltaTime;
-            UpdateScoreText();
+            MainGameManager.Instance.UpdateCurScore(Mathf.FloorToInt(_score));
 
             if (_curLevelIndex < levelMax.Count && _score > levelMax[_curLevelIndex])
             {
@@ -67,16 +69,19 @@ namespace NguyenQuangMinh.DOTrescue
             }
         }
 
-        public void UpdateScoreText()
-        {
-            if (_scoreTxt != null)
-                _scoreTxt.text = Mathf.FloorToInt(_score).ToString();
-        }
-
         public void GameOver()
         {
-            Debug.Log("Game Over!");
             _isGameOver = true;
+            if (_score > DataManager.Instance.GameData.DotRescueHighScore)
+            {
+                DataManager.Instance.GameData.DotRescueHighScore = Mathf.FloorToInt(_score);
+                DataManager.Instance.GameData.Save();
+            }
+
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowGameOverUI(Mathf.FloorToInt(_score));
+            });
         }
 
         private void OnDisable()

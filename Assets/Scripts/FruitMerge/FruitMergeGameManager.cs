@@ -46,11 +46,6 @@ namespace NguyenQuangMinh.FruitMerge
             set => _isLose = value;
         }
 
-        private void Start()
-        {
-            StartNewGame();
-        }
-
         public void StartNewGame()
         {
             _isLose = false;
@@ -73,6 +68,9 @@ namespace NguyenQuangMinh.FruitMerge
                 PoolingManager.Despawn(_curFruit.gameObject);
                 _curFruit = null;
             }
+
+            MainGameManager.Instance.ShowScore(true);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
             NextFruit();
             SpawnFruit();
@@ -209,7 +207,18 @@ namespace NguyenQuangMinh.FruitMerge
                 PoolingManager.Despawn(_curFruit.gameObject);
            _isLose = true;
             _uiFruitMerge.EndGame();
-            Debug.Log("Game Over");
+            int score = _uiFruitMerge.Score;
+
+            if (score > DataManager.Instance.GameData.FruitMergeHighScore)
+            {
+                DataManager.Instance.GameData.FruitMergeHighScore = score;
+                DataManager.Instance.GameData.Save();
+            }
+
+            DOVirtual.DelayedCall(1f,() =>
+            {
+                MainGameManager.Instance.ShowGameOverUI(score);
+            });
         }
 
         private void OnDisable()

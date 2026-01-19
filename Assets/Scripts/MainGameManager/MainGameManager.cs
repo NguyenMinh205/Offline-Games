@@ -32,6 +32,10 @@ public class MainGameManager : Singleton<MainGameManager>
     [SerializeField] private TextMeshProUGUI _winTxt;
     [SerializeField] private GameObject _loseUI;
     [SerializeField] private TextMeshProUGUI _loseTxt;
+    [SerializeField] private GameObject _gameOverUI;
+    [SerializeField] private TextMeshProUGUI _gameOverTxt;
+    [SerializeField] private TextMeshProUGUI _gameOverScoreTxt;
+    [SerializeField] private TextMeshProUGUI _gameOverScoreNumTxt;
     [SerializeField] private GameObject _buttonsUI;
     [SerializeField] private Button _backHomeBtn;
     [SerializeField] private Button _playAgainBtn;
@@ -92,6 +96,10 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             _uiMainMenu.SetActive(false);
             _uiInGame.SetActive(true);
+            HideWinUI();
+            HideLoseUI();
+            HideGameOverUI();
+            HideButtonUI();
 
             _currentGame = game;
             _currentGame.SetActive(true);
@@ -114,6 +122,12 @@ public class MainGameManager : Singleton<MainGameManager>
         if (_curGameManager == null) return;
         AudioManager.Instance.PlaySoundButtonClick();
         DoTransition(() =>
+        {
+            HideWinUI();
+            HideLoseUI();
+            HideGameOverUI();
+            HideButtonUI();
+        }, () =>
         {
             _curGameManager.Restart();
         });
@@ -145,6 +159,16 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         if (_curScoreGObj != null) _curScoreGObj.SetActive(isShow);
         if (_highScoreGObj != null) _highScoreGObj.SetActive(isShow);
+    }
+
+    public void SetCurScore(int score)
+    {
+        if (_curScoreTxt != null) _curScoreTxt.text = score.ToString();
+    }
+
+    public void SetHighScore(int score)
+    {
+        if (_highScoreTxt != null) _highScoreTxt.text = score.ToString();
     }
 
     public void OpenSetting()
@@ -223,6 +247,12 @@ public class MainGameManager : Singleton<MainGameManager>
         }
     }    
 
+    public void HideButtonUI()
+    {
+        if (_buttonsUI == null) return;
+        _buttonsUI.SetActive(false);
+    }
+
     public void ShowWinUI(bool hasNextLevel, Action nextLevel = null)
     {
         if (_winUI == null) return;
@@ -231,8 +261,14 @@ public class MainGameManager : Singleton<MainGameManager>
         _winIcon.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
         _winTxt.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
         ShowButtonUI(hasNextLevel, nextLevel);
-    }   
-    
+    }
+
+    public void HideWinUI()
+    {
+        if (_winUI == null) return;
+        _winUI.SetActive(false);
+    }
+
     public void ShowLoseUI()
     {
         if (_loseUI == null) return;
@@ -240,5 +276,29 @@ public class MainGameManager : Singleton<MainGameManager>
         AudioManager.Instance.PlaySoundLose();
         _loseTxt.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
         ShowButtonUI(false);
+    }
+
+    public void HideLoseUI()
+    {
+        if (_loseUI == null) return;
+        _loseUI.SetActive(false);
+    }
+
+    public void ShowGameOverUI(int score)
+    {
+        if (_gameOverUI == null) return;
+        _gameOverUI.SetActive(true);
+        AudioManager.Instance.PlaySoundWin();
+        _gameOverTxt.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        _gameOverScoreTxt.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        _gameOverScoreNumTxt.text = score.ToString();
+        _gameOverScoreNumTxt.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutQuad);
+        ShowButtonUI(false);
+    }
+
+    public void HideGameOverUI()
+    {
+        if (_gameOverUI == null) return;
+        _gameOverUI.SetActive(false);
     }
 }

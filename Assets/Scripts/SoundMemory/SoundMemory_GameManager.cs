@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -75,6 +76,10 @@ namespace NguyenQuangMinh.SoundMemory
         {
             gameActive = false;
             _uiManager.EnableButtons(false);
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowGameOverUI(score);
+            });
             Debug.Log("Game Over! Final Score: " + score);
         }
     }

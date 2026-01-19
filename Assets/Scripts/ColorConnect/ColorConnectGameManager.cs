@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -268,11 +269,12 @@ namespace NguyenQuangMinh.ColorConnect
 
         private void OnLevelCompleted()
         {
-            Debug.Log("VICTORY! BẠN ĐÃ CHIẾN THẮNG!");
             _isDragging = false;
             _isTransitioning = true;
-
-            Invoke(nameof(LoadNextLevel), 1f);
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowWinUI(true, LoadNextLevel);
+            });
         }
 
         private void LoadNextLevel()

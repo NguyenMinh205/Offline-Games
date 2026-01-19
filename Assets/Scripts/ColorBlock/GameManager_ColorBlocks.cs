@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,7 +15,6 @@ namespace NguyenQuangMinh.ColorBlock
         public ColorBlockSpawnBlock Spawner => spawner;
             
         [SerializeField] private int score = 0;
-        [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private float snapDuration = 0.2f;
         public float SnapDuration => snapDuration;
         private const int scorePerLine = 10;
@@ -23,7 +23,8 @@ namespace NguyenQuangMinh.ColorBlock
         {
             score = 0;
             MainGameManager.Instance.ShowScore(true);
-            SetScoreText();
+            MainGameManager.Instance.UpdateCurScore(score);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
             boardManager.InitializeBoard();
             boardManager.ResetBoard();
@@ -37,7 +38,8 @@ namespace NguyenQuangMinh.ColorBlock
         public void Restart()
         {
             score = 0;
-            SetScoreText();
+            MainGameManager.Instance.UpdateCurScore(score);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
             boardManager.ResetBoard();
             spawner.ReturnAllBlocksToPool();
@@ -53,17 +55,21 @@ namespace NguyenQuangMinh.ColorBlock
             float totalScore = index * scorePerLine * multiplier;
 
             score += Mathf.RoundToInt(totalScore);
-            SetScoreText();
-        }
-
-        public void SetScoreText()
-        {
-            scoreText.text = score.ToString();
+            MainGameManager.Instance.UpdateCurScore(score);
         }
 
         public void GameOver()
         {
-            Debug.LogError("GAME OVER! Score: " + score);
+            if (score > DataManager.Instance.GameData.ColorBlockHighScore)
+            {
+                DataManager.Instance.GameData.ColorBlockHighScore = score;
+                DataManager.Instance.GameData.Save();
+            }
+
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                MainGameManager.Instance.ShowGameOverUI(score);
+            });
         }
     }
 }

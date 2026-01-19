@@ -9,15 +9,15 @@ namespace NguyenQuangMinh.FruitMerge
 {
     public class UIController : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _txtScore;
         [SerializeField] private Image _nextFruitImg;
         private int score;
+        public int Score => score;
 
         public void Init()
         {
             MainGameManager.Instance.ShowScore(true);
-            _txtScore.text = "0";
             score = 0;
+            MainGameManager.Instance.SetCurScore(score);
             ObserverManager<EventID>.AddRegisterEvent(EventID.UpdateScore, param => UpdateViewScore((int)param));
         }
 
@@ -29,7 +29,7 @@ namespace NguyenQuangMinh.FruitMerge
         private void UpdateViewScore(int value)
         {
             score += value;
-            _txtScore.text = score.ToString();
+            MainGameManager.Instance.SetCurScore(score);
         }
 
         public void SetNextFruit(Sprite fruitSprite)
