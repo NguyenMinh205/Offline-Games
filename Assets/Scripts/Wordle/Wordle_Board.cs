@@ -30,7 +30,6 @@ namespace NguyenQuangMinh.Wordle
         private void Start()
         {
             LoadData();
-            StartNewGame();
         }
 
         public void LoadData()
@@ -52,6 +51,11 @@ namespace NguyenQuangMinh.Wordle
             currentRow = 0;
             currentColumn = 0;
 
+            RandomSolution();
+        }
+
+        public void ResetGame()
+        {
             foreach (var row in _rows)
             {
                 foreach (var tile in row.Tiles)
@@ -61,8 +65,6 @@ namespace NguyenQuangMinh.Wordle
             }
 
             if (_keyboard != null) _keyboard.ResetKeyboard();
-
-            RandomSolution();
         }
 
         public void Restart()

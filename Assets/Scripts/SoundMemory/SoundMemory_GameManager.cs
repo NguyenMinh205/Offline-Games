@@ -21,12 +21,17 @@ namespace NguyenQuangMinh.SoundMemory
         public void StartNewGame()
         {
             _uiManager.Init();
-            score = 0;
             gameActive = true;
             _sequenceManager.ResetSequence();
-            _uiManager.UpdateScore(score);
+            
             NextRound();
         }
+
+        public void ResetGame()
+        {
+            score = 0;
+            _uiManager.UpdateScore(score);
+        }    
 
         public void Restart()
         {

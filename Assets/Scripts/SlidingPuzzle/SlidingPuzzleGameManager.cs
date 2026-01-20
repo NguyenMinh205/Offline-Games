@@ -27,7 +27,7 @@ namespace NguyenQuangMinh.SlidingPuzzle
         [SerializeField] private AudioClip _moveSound;
         [SerializeField] private AudioClip _winSound;
 
-        private List<GameObject> _pieces;
+        private List<GameObject> _pieces = new List<GameObject>();
         private int _emptyLocation;
         private bool _isMoving = false;
         private bool _isGameActive = false;
@@ -35,11 +35,7 @@ namespace NguyenQuangMinh.SlidingPuzzle
 
         public void StartNewGame()
         {
-            _pieces = new List<GameObject>();
-            foreach (Transform child in _board)
-            {
-                Destroy(child.gameObject);
-            }
+            StopAllCoroutines();
             _pieces.Clear();
 
             int index = Random.Range(0, _piecePrefab.Count);
@@ -49,6 +45,14 @@ namespace NguyenQuangMinh.SlidingPuzzle
             CreateGamePieces(prefab, _sizeBoard, _gapThickness);
 
             StartCoroutine(ShuffleRoutine());
+        }
+
+        public void ResetGame()
+        {
+            foreach (Transform child in _board)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         public void Restart()

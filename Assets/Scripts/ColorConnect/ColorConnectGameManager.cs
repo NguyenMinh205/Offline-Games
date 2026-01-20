@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +41,15 @@ namespace NguyenQuangMinh.ColorConnect
             }
         }
 
+        public void ResetGame()
+        {
+            _allPaths.Clear();
+            foreach (Transform child in _gridContainer)
+            {
+                PoolingManager.Despawn(child.gameObject);
+            }
+        }
+
         public void Restart()
         {
             LoadLevel(_levelData[_currentLevelIndex]);
@@ -50,14 +58,10 @@ namespace NguyenQuangMinh.ColorConnect
         public void LoadLevel(DataGrid data)
         {
             _currentLevelData = data;
-            _allPaths.Clear();
             _isDragging = false;
             _isTransitioning = false;
 
-            foreach (Transform child in _gridContainer)
-            {
-                PoolingManager.Despawn(child.gameObject);
-            }
+            ResetGame();
 
             _layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             _layoutGroup.constraintCount = data.gridSize.x;

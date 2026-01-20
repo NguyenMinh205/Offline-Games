@@ -7,4 +7,6 @@ public interface IGameManager
     void StartNewGame();
 
     void Restart();
+
+    void ResetGame();
 }

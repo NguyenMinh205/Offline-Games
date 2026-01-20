@@ -41,14 +41,19 @@ namespace NguyenQuangMinh.Tetris
             }
         }
 
-        public void StartNewGame()
+        public void ResetBoard()
         {
             _tilemap.ClearAllTiles();
             if (_piece != null)
             {
                 ClearPiece(_piece);
             }
-            DOVirtual.DelayedCall(1f, () =>
+        }
+
+        public void StartNewGame()
+        {
+            ResetBoard();
+            DOVirtual.DelayedCall(0.5f, () =>
             {
                 SpawnPiece();
             });

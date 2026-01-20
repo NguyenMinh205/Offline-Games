@@ -106,6 +106,11 @@ public class MainGameManager : Singleton<MainGameManager>
 
             _curGameManager = _currentGame.GetComponentInChildren<IGameManager>();
 
+            if (_curGameManager != null)
+            {
+                _curGameManager.ResetGame();
+            }
+
             AudioManager.Instance.StopMusic();
         }, () => 
         {
@@ -127,6 +132,7 @@ public class MainGameManager : Singleton<MainGameManager>
             HideLoseUI();
             HideGameOverUI();
             HideButtonUI();
+            _curGameManager.ResetGame();
         }, () =>
         {
             _curGameManager.Restart();

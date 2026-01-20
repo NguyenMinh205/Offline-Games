@@ -27,12 +27,17 @@ namespace NguyenQuangMinh.ColorBlock
             MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
             boardManager.InitializeBoard();
-            boardManager.ResetBoard();
-
             spawner.Init();
-            spawner.ReturnAllBlocksToPool();
+
+            ResetGame();
 
             spawner.Spawn();
+        }
+
+        public void ResetGame()
+        {
+            boardManager.ResetBoard();
+            spawner.ReturnAllBlocksToPool();
         }
 
         public void Restart()
@@ -41,8 +46,7 @@ namespace NguyenQuangMinh.ColorBlock
             MainGameManager.Instance.UpdateCurScore(score);
             MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
-            boardManager.ResetBoard();
-            spawner.ReturnAllBlocksToPool();
+            ResetGame();
 
             spawner.Spawn();
         }

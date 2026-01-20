@@ -58,6 +58,14 @@ namespace NguyenQuangMinh.TicTacToe
             SetupGame();
         }
 
+        public void ResetGame()
+        {
+            _gridManager.SetupGrid();
+
+            if (_winLineManager != null)
+                _winLineManager.SetWinLine(WinLine.None);
+        }    
+
         public void Restart()
         {
             if (_currentTurn == Turn.Player)
@@ -76,11 +84,6 @@ namespace NguyenQuangMinh.TicTacToe
         public void SetupGame()
         {
             StopAllGameCoroutines();
-
-            _gridManager.SetupGrid();
-
-            if (_winLineManager != null)
-                _winLineManager.SetWinLine(WinLine.None);
 
             if (_currentTurn == Turn.Player)
             {

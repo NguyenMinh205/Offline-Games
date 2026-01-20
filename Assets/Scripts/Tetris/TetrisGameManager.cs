@@ -25,6 +25,11 @@ namespace NguyenQuangMinh.Tetris
             _boardManager.StartNewGame();
         }
 
+        public void ResetGame()
+        {
+            _boardManager.ResetBoard();
+        }    
+
         public void Restart()
         {
             StartNewGame();

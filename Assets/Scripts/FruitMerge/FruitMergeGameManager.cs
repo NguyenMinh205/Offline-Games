@@ -49,31 +49,30 @@ namespace NguyenQuangMinh.FruitMerge
         public void StartNewGame()
         {
             _isLose = false;
-            if (_curFruit != null)
-            {
-                PoolingManager.Despawn(_curFruit.gameObject);
-            }
-            _curFruit = null;
             _uiFruitMerge.Init();
-
-            foreach (var item in allFruits)
-            {
-                if (item != null && item.gameObject.activeSelf)
-                    PoolingManager.Despawn(item.gameObject);
-            }
-            allFruits.Clear();
-
-            if (_curFruit != null)
-            {
-                PoolingManager.Despawn(_curFruit.gameObject);
-                _curFruit = null;
-            }
 
             MainGameManager.Instance.ShowScore(true);
             MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
             NextFruit();
             SpawnFruit();
+        }
+
+        public void ResetGame()
+        {
+            if (_curFruit != null)
+            {
+                PoolingManager.Despawn(_curFruit.gameObject);
+                _curFruit = null;
+            }
+            _curFruit = null;
+            foreach (var item in allFruits)
+            {
+                if (item != null && item.gameObject.activeSelf)
+                    PoolingManager.Despawn(item.gameObject);
+            }
+
+            allFruits.Clear();
         }
 
         public void Restart()

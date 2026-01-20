@@ -32,18 +32,6 @@ namespace NguyenQuangMinh.MemoryCard
         {
             StopAllCoroutines();
 
-            if (_cards != null && _cards.Count > 0)
-            {
-                foreach (var card in _cards)
-                {
-                    if (card != null && card.gameObject != null)
-                    {
-                        card.transform.DOKill();
-                        PoolingManager.Despawn(card.gameObject);
-                    }
-                }
-            }
-
             _cardSprites = new List<Sprite>();
             _cards = new List<Card>();
             _matchedPairsCount = 0;
@@ -58,6 +46,21 @@ namespace NguyenQuangMinh.MemoryCard
             }
 
             RunGame();
+        }
+
+        public void ResetGame()
+        {
+            if (_cards != null && _cards.Count > 0)
+            {
+                foreach (var card in _cards)
+                {
+                    if (card != null && card.gameObject != null)
+                    {
+                        card.transform.DOKill();
+                        PoolingManager.Despawn(card.gameObject);
+                    }
+                }
+            }
         }
 
         public void Restart()

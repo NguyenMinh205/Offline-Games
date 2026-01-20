@@ -51,6 +51,18 @@ namespace NguyenQuangMinh.WaterSort
             LoadLevel(_currentLevelIndex);
         }
 
+        public void ResetGame()
+        {
+            if (_listBottle.Count > 0)
+            {
+                foreach (var bottle in _listBottle)
+                {
+                    PoolingManager.Despawn(bottle.gameObject);
+                }
+                _listBottle.Clear();
+            }
+        }
+
         public void Restart()
         {
             LoadLevel(_currentLevelIndex);
@@ -82,12 +94,6 @@ namespace NguyenQuangMinh.WaterSort
         private void LoadLevel(int levelIndex)
         {
             UpdateWaterLine(false);
-
-            foreach (var bottle in _listBottle)
-            {
-                PoolingManager.Despawn(bottle.gameObject);
-            }
-            _listBottle.Clear();
             _chosenBottle = null;
             _targetBottle = null;
 

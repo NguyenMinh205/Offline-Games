@@ -25,9 +25,13 @@ namespace NguyenQuangMinh.Sudoku
             cells = new Sudoku_Cell[GRID_SIZE, GRID_SIZE];
             _selectedCell = null;
             _filledCells = 0;
-            ClearBoard();
             SetupBoard();
         }
+
+        public void ResetGame()
+        {
+            ClearBoard();
+        }    
 
         public void Restart()
         {

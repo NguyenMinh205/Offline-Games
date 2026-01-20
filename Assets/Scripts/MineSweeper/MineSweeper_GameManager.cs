@@ -38,13 +38,16 @@ namespace NguyenQuangMinh.MineSweeper
             CloseFlagMode();
             isGameOver = false;
             revealedCount = 0;
+            CreateGameBoard(_width, _height, _numMines);
+        }
 
+        public void ResetGame()
+        {
             foreach (var tile in _tiles)
             {
                 PoolingManager.Despawn(tile.gameObject);
             }
             _tiles.Clear();
-            CreateGameBoard(_width, _height, _numMines);
         }
 
         public void Restart()

@@ -34,16 +34,20 @@ namespace NguyenQuangMinh.DOTrescue
             if (_levelSpeed.Count > 0)
                 _scoreSpeed = _levelSpeed[_curLevelIndex];
 
-            _point.SetActive(true);
-            _player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            _obstacle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            _player.gameObject.SetActive(true);
-            _obstacle.gameObject.SetActive(true);
             MainGameManager.Instance.ShowScore(true);
             MainGameManager.Instance.UpdateCurScore((int)_score);
             MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.DotRescueHighScore);
             MainGameManager.Instance.CountDown();
         }
+
+        public void ResetGame()
+        {
+            _point.SetActive(true);
+            _player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            _obstacle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            _player.gameObject.SetActive(true);
+            _obstacle.gameObject.SetActive(true);
+        }    
 
         public void Restart()
         {

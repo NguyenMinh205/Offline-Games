@@ -26,6 +26,11 @@ namespace NguyenQuangMinh.NumberSlide
             _board.StartNewGame();
         }
 
+        public void ResetGame()
+        {
+            _board.ClearBoard();
+        }
+
         public void Restart()
         {
             StartNewGame();

@@ -22,6 +22,7 @@ namespace NguyenQuangMinh.SoundMemory
             for (int i = 0; i < _soundButtons.Count; i++)
             {
                 int index = i;
+                _soundButtons[i].onClick.RemoveAllListeners();
                 _soundButtons[i].onClick.AddListener(() => SoundMemory_GameManager.Instance.OnClickButtonSound(index));
                 if (_soundButtons[i] != null && _soundButtons[i].image != null)
                 {
