@@ -17,17 +17,16 @@ namespace NguyenQuangMinh.NumberSlide
 
         public void StartNewGame()
         {
-            _currentScore = 0;
-
-            MainGameManager.Instance.ShowScore(true);
-            MainGameManager.Instance.SetCurScore(_currentScore);
-            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.NumberSlideHighScore);
-
             _board.StartNewGame();
         }
 
         public void ResetGame()
         {
+            MainGameManager.Instance.ShowScore(true);
+            _currentScore = 0;
+            MainGameManager.Instance.SetCurScore(_currentScore);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.NumberSlideHighScore);
+
             _board.ClearBoard();
         }
 
@@ -49,6 +48,8 @@ namespace NguyenQuangMinh.NumberSlide
         {
             _currentScore += points;
             MainGameManager.Instance.SetCurScore(_currentScore);
+
+            SetHighScore();
         }
 
         private void SetHighScore()

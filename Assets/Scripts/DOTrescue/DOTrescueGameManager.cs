@@ -26,7 +26,6 @@ namespace NguyenQuangMinh.DOTrescue
         public void StartNewGame()
         {
             _isGameOver = false;
-            _score = 0f;
             _curLevelIndex = 0;
 
             _obstacleController.ResetDifficulty();
@@ -34,20 +33,21 @@ namespace NguyenQuangMinh.DOTrescue
             if (_levelSpeed.Count > 0)
                 _scoreSpeed = _levelSpeed[_curLevelIndex];
 
-            MainGameManager.Instance.ShowScore(true);
-            MainGameManager.Instance.UpdateCurScore((int)_score);
-            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.DotRescueHighScore);
             MainGameManager.Instance.CountDown();
         }
 
         public void ResetGame()
         {
+            MainGameManager.Instance.ShowScore(true);
+            _score = 0f;
+            MainGameManager.Instance.UpdateCurScore((int)_score);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.DotRescueHighScore);
             _point.SetActive(true);
             _player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             _obstacle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             _player.gameObject.SetActive(true);
             _obstacle.gameObject.SetActive(true);
-        }    
+        }
 
         public void Restart()
         {
@@ -59,7 +59,11 @@ namespace NguyenQuangMinh.DOTrescue
             if (_isGameOver || MainGameManager.Instance.GameState != GameState.InGame) return;
 
             _score += _scoreSpeed * Time.deltaTime;
-            MainGameManager.Instance.UpdateCurScore(Mathf.FloorToInt(_score));
+            int currentScoreInt = Mathf.FloorToInt(_score);
+
+            MainGameManager.Instance.UpdateCurScore(currentScoreInt);
+
+            SetHighScore();
 
             if (_curLevelIndex < levelMax.Count && _score > levelMax[_curLevelIndex])
             {
@@ -76,16 +80,22 @@ namespace NguyenQuangMinh.DOTrescue
         public void GameOver()
         {
             _isGameOver = true;
-            if (_score > DataManager.Instance.GameData.DotRescueHighScore)
-            {
-                DataManager.Instance.GameData.DotRescueHighScore = Mathf.FloorToInt(_score);
-                DataManager.Instance.GameData.Save();
-            }
+            SetHighScore();
 
             DOVirtual.DelayedCall(1f, () =>
             {
                 MainGameManager.Instance.ShowGameOverUI(Mathf.FloorToInt(_score));
             });
+        }
+
+        public void SetHighScore()
+        {
+            if (_score > DataManager.Instance.GameData.DotRescueHighScore)
+            {
+                DataManager.Instance.GameData.DotRescueHighScore = Mathf.FloorToInt(_score);
+                MainGameManager.Instance.SetHighScore(Mathf.FloorToInt(_score));
+                DataManager.Instance.GameData.Save();
+            }
         }
 
         private void OnDisable()

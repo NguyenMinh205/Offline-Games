@@ -17,18 +17,18 @@ namespace NguyenQuangMinh.Tetris
 
         public void StartNewGame()
         {
-            Score = 0;
             IsGameOver = false;
-            MainGameManager.Instance.ShowScore(true);
-            MainGameManager.Instance.UpdateCurScore(Score);
-            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.TetrisHighScore);
             _boardManager.StartNewGame();
         }
 
         public void ResetGame()
         {
+            MainGameManager.Instance.ShowScore(true);
+            Score = 0;
+            MainGameManager.Instance.UpdateCurScore(Score);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.TetrisHighScore);
             _boardManager.ResetBoard();
-        }    
+        }
 
         public void Restart()
         {
@@ -49,6 +49,11 @@ namespace NguyenQuangMinh.Tetris
         {
             Score += linesCleared * (linesCleared * linesCleared) * 10;
             MainGameManager.Instance.UpdateCurScore(Score);
+
+            if (Score > DataManager.Instance.GameData.TetrisHighScore)
+            {
+                MainGameManager.Instance.SetHighScore(Score);
+            }
         }
 
         public void SetHighScore()

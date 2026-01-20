@@ -49,10 +49,6 @@ namespace NguyenQuangMinh.FruitMerge
         public void StartNewGame()
         {
             _isLose = false;
-            _uiFruitMerge.Init();
-
-            MainGameManager.Instance.ShowScore(true);
-            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
             NextFruit();
             SpawnFruit();
@@ -73,6 +69,7 @@ namespace NguyenQuangMinh.FruitMerge
             }
 
             allFruits.Clear();
+            _uiFruitMerge.Init();
         }
 
         public void Restart()

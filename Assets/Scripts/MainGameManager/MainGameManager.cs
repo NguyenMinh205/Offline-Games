@@ -96,10 +96,7 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             _uiMainMenu.SetActive(false);
             _uiInGame.SetActive(true);
-            HideWinUI();
-            HideLoseUI();
-            HideGameOverUI();
-            HideButtonUI();
+            HideAllUI();
 
             _currentGame = game;
             _currentGame.SetActive(true);
@@ -128,10 +125,7 @@ public class MainGameManager : Singleton<MainGameManager>
         AudioManager.Instance.PlaySoundButtonClick();
         DoTransition(() =>
         {
-            HideWinUI();
-            HideLoseUI();
-            HideGameOverUI();
-            HideButtonUI();
+            HideAllUI();
             _curGameManager.ResetGame();
         }, () =>
         {
@@ -144,6 +138,7 @@ public class MainGameManager : Singleton<MainGameManager>
         AudioManager.Instance.PlaySoundButtonClick();
         DoTransition(() =>
         {
+            HideAllUI();
             ShowScore(false);
             _uiInGame.SetActive(false);
             _uiMainMenu.SetActive(true);
@@ -159,6 +154,14 @@ public class MainGameManager : Singleton<MainGameManager>
             AudioManager.Instance.PlayMusicInMenu();
         });
         _gameState = GameState.MainMenu;
+    }
+
+    public void HideAllUI()
+    {
+        HideWinUI();
+        HideLoseUI();
+        HideGameOverUI();
+        HideButtonUI();
     }
 
     public void ShowScore(bool isShow)

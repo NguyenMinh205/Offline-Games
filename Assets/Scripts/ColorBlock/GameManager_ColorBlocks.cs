@@ -13,7 +13,7 @@ namespace NguyenQuangMinh.ColorBlock
         public ColorBoard_BoardManager BoardManager => boardManager;
         [SerializeField] private ColorBlockSpawnBlock spawner;
         public ColorBlockSpawnBlock Spawner => spawner;
-            
+
         [SerializeField] private int score = 0;
         [SerializeField] private float snapDuration = 0.2f;
         public float SnapDuration => snapDuration;
@@ -21,9 +21,6 @@ namespace NguyenQuangMinh.ColorBlock
 
         public void StartNewGame()
         {
-            score = 0;
-            MainGameManager.Instance.ShowScore(true);
-            MainGameManager.Instance.UpdateCurScore(score);
             MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
 
             boardManager.InitializeBoard();
@@ -36,6 +33,9 @@ namespace NguyenQuangMinh.ColorBlock
 
         public void ResetGame()
         {
+            MainGameManager.Instance.ShowScore(true);
+            score = 0;
+            MainGameManager.Instance.UpdateCurScore(score);
             boardManager.ResetBoard();
             spawner.ReturnAllBlocksToPool();
         }
@@ -60,20 +60,26 @@ namespace NguyenQuangMinh.ColorBlock
 
             score += Mathf.RoundToInt(totalScore);
             MainGameManager.Instance.UpdateCurScore(score);
+            SetHighScore();
         }
 
         public void GameOver()
         {
-            if (score > DataManager.Instance.GameData.ColorBlockHighScore)
-            {
-                DataManager.Instance.GameData.ColorBlockHighScore = score;
-                DataManager.Instance.GameData.Save();
-            }
-
+            SetHighScore();
             DOVirtual.DelayedCall(1f, () =>
             {
                 MainGameManager.Instance.ShowGameOverUI(score);
             });
+        }
+
+        public void SetHighScore()
+        {
+            if (score > DataManager.Instance.GameData.ColorBlockHighScore)
+            {
+                DataManager.Instance.GameData.ColorBlockHighScore = score;
+                MainGameManager.Instance.SetHighScore(score);
+                DataManager.Instance.GameData.Save();
+            }
         }
     }
 }
