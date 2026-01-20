@@ -98,6 +98,8 @@ public class MainGameManager : Singleton<MainGameManager>
             _uiInGame.SetActive(true);
             HideAllUI();
 
+            AudioManager.Instance.StopMusic();
+
             _currentGame = game;
             _currentGame.SetActive(true);
 
@@ -107,8 +109,6 @@ public class MainGameManager : Singleton<MainGameManager>
             {
                 _curGameManager.ResetGame();
             }
-
-            AudioManager.Instance.StopMusic();
         }, () => 
         {
             if (_curGameManager != null)

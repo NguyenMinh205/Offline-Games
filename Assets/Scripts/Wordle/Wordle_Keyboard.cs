@@ -28,14 +28,18 @@ namespace NguyenQuangMinh.Wordle
             }
         }
 
-        public void DisableKey(char letter)
+        public void UpdateKeyColor(char letter, State newState, State correctState, State wrongSpotState)
         {
-            Debug.Log("Check 2");
             letter = char.ToUpper(letter);
-            if (_keyMap.ContainsKey(letter))
-            {
-                _keyMap[letter].SetState(false);
-            }
+            if (!_keyMap.ContainsKey(letter)) return;
+
+            Wordle_KeyCap key = _keyMap[letter];
+            State currentKeyState = key.CurrentState;
+
+            if (currentKeyState == correctState) return;
+            if (currentKeyState == wrongSpotState && newState != correctState) return;
+
+            key.SetState(newState);
         }
 
         public void ResetKeyboard()

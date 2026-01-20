@@ -148,8 +148,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 7926803772210997070}
-  _canvasGroup: {fileID: 8421420695290047586}
+  _image: {fileID: 8403367228152055822}
+  _letterText: {fileID: 3785197175193031752}
   _letter: 0
+  _defaultFillColor: {r: 1, g: 1, b: 1, a: 1}
+  _defaultWordColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &7228131633960707603
 GameObject:
   m_ObjectHideFlags: 0

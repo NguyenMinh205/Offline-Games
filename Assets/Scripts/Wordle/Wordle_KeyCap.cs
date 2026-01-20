@@ -7,21 +7,28 @@ namespace NguyenQuangMinh.Wordle
     public class Wordle_KeyCap : MonoBehaviour
     {
         [SerializeField] private Button _button;
-        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private Image _image;
+        [SerializeField] private TextMeshProUGUI _letterText;
         [SerializeField] private char _letter;
+        [SerializeField] private Color _defaultFillColor = Color.white;
+        [SerializeField] private Color _defaultWordColor = Color.black;
+        public State CurrentState { get; private set; }
 
         public char Letter => _letter;
 
-        public void SetState(bool isActive)
+        public void SetState(State state)
         {
-            Debug.Log("check");
-            _button.interactable = isActive;
-            _canvasGroup.alpha = isActive ? 1f : 0.5f;
+            CurrentState = state;
+
+            _letterText.color = state.wordColor;
+            _image.color = state.fillColor;
         }
 
         public void ResetKey()
         {
-            SetState(true);
+            CurrentState = null;
+            _letterText.color = _defaultWordColor;
+            _image.color = _defaultFillColor;
         }
     }
 }

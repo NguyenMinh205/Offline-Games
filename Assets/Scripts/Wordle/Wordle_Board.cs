@@ -139,9 +139,9 @@ namespace NguyenQuangMinh.Wordle
 
                 submitSequence.AppendCallback(() =>
                 {
-                    if (targetState == incorrectState)
+                    if (_keyboard != null)
                     {
-                        if (_keyboard != null) _keyboard.DisableKey(letterChar);
+                        _keyboard.UpdateKeyColor(letterChar, targetState, correctState, wrongSpotState);
                     }
                 });
             }
