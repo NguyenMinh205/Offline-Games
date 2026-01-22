@@ -37,7 +37,7 @@ namespace NguyenQuangMinh.ColorConnect
             if (_levelData != null && _levelData.Count > 0)
             {
                 _currentLevelIndex = 0;
-                LoadLevel(_levelData[0]);
+                LoadLevel(_levelData[_currentLevelIndex]);
             }
         }
 
@@ -65,6 +65,8 @@ namespace NguyenQuangMinh.ColorConnect
 
             _layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             _layoutGroup.constraintCount = data.gridSize.x;
+            Rect rect = _layoutGroup.GetComponent<RectTransform>().rect;
+            _layoutGroup.cellSize = new Vector2(rect.width / data.gridSize.x, rect.height / data.gridSize.y);
             _totalTilesCount = data.gridSize.x * data.gridSize.y;
 
             _gridTiles = new Tile[data.gridSize.x, data.gridSize.y];

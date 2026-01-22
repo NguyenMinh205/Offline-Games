@@ -9,7 +9,7 @@ namespace NguyenQuangMinh.ColorConnect
         [Header("UI Components")]
         [SerializeField] private Image _highlight;
         [SerializeField] private Image _dotColor;
-        [Header("Edges")] // Đảm bảo gán đúng reference trong Prefab
+        [Header("Edges")]
         [SerializeField] private Image _topEdge;
         [SerializeField] private Image _bottomEdge;
         [SerializeField] private Image _leftEdge;

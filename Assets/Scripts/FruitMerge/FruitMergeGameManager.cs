@@ -3,6 +3,7 @@ using NguyenQuangMinh.FruitMerge;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace NguyenQuangMinh.FruitMerge
 {
@@ -37,6 +38,12 @@ namespace NguyenQuangMinh.FruitMerge
         [SerializeField] private float _timeCheckLose;
         public float TimeCheckLose => _timeCheckLose;
 
+        [Header("Spawn Limit")]
+        [SerializeField] private int _initialSpawnLimit = 2;
+        [SerializeField] private int _maxLevelSpawnLimit = 5;
+        [SerializeField] private int levelGapToUnlock = 3;
+        private int _maxCurrentFruitLevel = 0;
+
         [Space]
         [Header("Game State")]
         [SerializeField] private bool _isLose;
@@ -49,6 +56,8 @@ namespace NguyenQuangMinh.FruitMerge
         public void StartNewGame()
         {
             _isLose = false;
+            model.LimitFruit = _initialSpawnLimit;
+            _maxCurrentFruitLevel = _initialSpawnLimit - 1;
 
             NextFruit();
             SpawnFruit();
@@ -80,6 +89,9 @@ namespace NguyenQuangMinh.FruitMerge
         private void Update()
         {
             if (_isLose && isDelay) return;
+
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+
             if (Input.GetMouseButtonDown(0))
             {
                 OnClick();
@@ -186,6 +198,12 @@ namespace NguyenQuangMinh.FruitMerge
             allFruits.Remove(fruit1);
             allFruits.Remove(fruit2);
 
+            if (level > _maxCurrentFruitLevel)
+            {
+                _maxCurrentFruitLevel = level;
+                CheckMaxLevelFruitSpawn();
+            }   
+
             InfoFruit newFruit = PoolingManager.Spawn(model.DataFruit[level], newPosSpawn, Quaternion.identity, objectPool);
             newFruit.Init(level, MergeFruit, GameOver, true);
             
@@ -196,6 +214,14 @@ namespace NguyenQuangMinh.FruitMerge
 
             ObserverManager<EventID>.PostEvent(EventID.UpdateScore, _scoreEachLevel * (level + 1));
         }
+
+        public void CheckMaxLevelFruitSpawn()
+        {
+            if (_maxCurrentFruitLevel - model.LimitFruit == 2 && model.LimitFruit < _maxLevelSpawnLimit)
+            {
+                model.LimitFruit++;
+            }
+        }    
 
         public void GameOver()
         {

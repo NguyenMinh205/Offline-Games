@@ -20,7 +20,7 @@ namespace NguyenQuangMinh.Sudoku
 
         private static readonly Random rnd = new Random();
 
-        public static int[,] GeneratePuzzle(Difficulty difficulty)
+        public static int[,] GeneratePuzzle(Difficulty difficulty, out int[,] solution)
         {
             int[,] board = new int[BOARD_SIZE, BOARD_SIZE];
             int cellsToRemove = 0;
@@ -40,6 +40,9 @@ namespace NguyenQuangMinh.Sudoku
             }
 
             InitializeBoard(board);
+
+            solution = new int[BOARD_SIZE, BOARD_SIZE];
+            Array.Copy(board, 0, solution, 0, board.Length);
 
             while (cellsToRemove > 0)
             {
@@ -148,5 +151,4 @@ namespace NguyenQuangMinh.Sudoku
             }
         }
     }
-
 }

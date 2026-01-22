@@ -159,6 +159,7 @@ namespace NguyenQuangMinh.TicTacToe
 
             yield return new WaitForSeconds(1f);
 
+            ResetGame();
             Restart();
         }
 

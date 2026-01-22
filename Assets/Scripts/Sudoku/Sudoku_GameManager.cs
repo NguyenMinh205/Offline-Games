@@ -6,13 +6,15 @@ using UnityEngine;
 
 namespace NguyenQuangMinh.Sudoku
 {
-
     public class Sudoku_GameManager : Singleton<Sudoku_GameManager>, IGameManager
     {
         [SerializeField] private List<Sudoku_SubGrid> _subGrids;
 
         private bool hasGameFinished;
         private Sudoku_Cell[,] cells;
+
+        private int[,] _solutionGrid;
+
         private Sudoku_Cell _selectedCell;
         private int _filledCells = 0;
 
@@ -31,7 +33,7 @@ namespace NguyenQuangMinh.Sudoku
         public void ResetGame()
         {
             ClearBoard();
-        }    
+        }
 
         public void Restart()
         {
@@ -46,7 +48,8 @@ namespace NguyenQuangMinh.Sudoku
 
         public void SetupBoard()
         {
-            int[,] puzzleGrid = Generator.GeneratePuzzle(Difficulty.Medium);
+            int[,] puzzleGrid = Generator.GeneratePuzzle(Difficulty.Medium, out _solutionGrid);
+
             for (int i = 0; i < GRID_SIZE; i++)
             {
                 Sudoku_SubGrid subGrid = _subGrids[i];
@@ -79,7 +82,7 @@ namespace NguyenQuangMinh.Sudoku
             AudioManager.Instance.PlaySudokuCellClickSound();
             Highlight();
             _selectedCell.Select();
-        }    
+        }
 
         public void ResetDefault(Sudoku_Cell cell)
         {
@@ -150,6 +153,15 @@ namespace NguyenQuangMinh.Sudoku
 
             _selectedCell.UpdateValue(value);
 
+            if (value == 0)
+            {
+                _selectedCell.IsIncorrect = false;
+                ResetDefault(_selectedCell);
+                Highlight();
+                _selectedCell.Select();
+                return;
+            }
+
             CheckCorrectValue();
             CheckWin();
         }
@@ -158,17 +170,12 @@ namespace NguyenQuangMinh.Sudoku
         {
             int row = _selectedCell.Row;
             int col = _selectedCell.Column;
-            bool isCorrect = true;
 
-            ClearErrorInArea(row, col);
+            int correctValue = _solutionGrid[row, col];
+            bool isCorrect = (_selectedCell.Value == correctValue);
 
-            isCorrect = isCorrect && CheckLineForConflicts(row, true);
+            _selectedCell.IsIncorrect = !isCorrect;
 
-            isCorrect = isCorrect && CheckLineForConflicts(col, false);
-
-            int subRow = (row / 3) * 3;
-            int subCol = (col / 3) * 3;
-            isCorrect = isCorrect && CheckSubgridForConflicts(subRow, subCol);
             ResetDefault(_selectedCell);
             Highlight();
             if (_selectedCell != null) _selectedCell.Select();
@@ -181,56 +188,6 @@ namespace NguyenQuangMinh.Sudoku
             {
                 AudioManager.Instance.PlaySudokuNumberCorrectSound();
             }
-        }
-
-        public void ClearErrorInArea(int row, int col)
-        {
-            for (int c = 0; c < 9; c++)
-                cells[row, c].IsIncorrect = false;
-
-            for (int r = 0; r < 9; r++)
-                cells[r, col].IsIncorrect = false;
-
-            int sr = (row / 3) * 3;
-            int sc = (col / 3) * 3;
-            for (int r = sr; r < sr + 3; r++)
-                for (int c = sc; c < sc + 3; c++)
-                    cells[r, c].IsIncorrect = false;
-        }
-
-        private bool CheckLineForConflicts(int index, bool isRow)
-        {
-            bool hasConflict = false;
-            for (int i = 0; i < 9; i++)
-            {
-                int r = isRow ? index : i;
-                int c = isRow ? i : index;
-                if (cells[r, c].Value == _selectedCell.Value && (r != _selectedCell.Row || c != _selectedCell.Column))
-                {
-                    cells[r, c].IsIncorrect = true;
-                    cells[_selectedCell.Row, _selectedCell.Column].IsIncorrect = true;
-                    hasConflict = true;
-                }
-            }
-            return hasConflict;
-        }
-
-        private bool CheckSubgridForConflicts(int startRow, int startCol)
-        {
-            bool hasConflict = false;
-            for (int r = startRow; r < startRow + 3; r++)
-            {
-                for (int c = startCol; c < startCol + 3; c++)
-                {
-                    if (cells[r, c].Value == _selectedCell.Value && (r != _selectedCell.Row || c != _selectedCell.Column))
-                    {
-                        cells[r, c].IsIncorrect = true;
-                        cells[_selectedCell.Row, _selectedCell.Column].IsIncorrect = true;
-                        hasConflict = true;
-                    }
-                }
-            }
-            return hasConflict;
         }
 
         public void CheckWin()
@@ -262,5 +219,4 @@ namespace NguyenQuangMinh.Sudoku
             }
         }
     }
-
 }

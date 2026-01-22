@@ -69,7 +69,7 @@ public static class PoolingManager
 
 public class Pool // Lớp cơ sở của Pooling
 {
-    private readonly Stack<GameObject> listGameObject; // Danh lưu trữ các prefab và chỉ được phép đọc
+    private readonly Queue<GameObject> listGameObject; // Danh lưu trữ các prefab và chỉ được phép đọc
     public readonly HashSet<int> IDObjects; // Danh sách lưu trữ ID của các game object ==> dùng để kiểm tra xem ID của GameObject này có tồn tại hay không
     private GameObject prefab;  // GameObject prafabs
 
@@ -77,7 +77,7 @@ public class Pool // Lớp cơ sở của Pooling
     {
         // Constructor khai báo lớp cơ sở
         prefab = gameObject;
-        listGameObject = new Stack<GameObject>();
+        listGameObject = new Queue<GameObject>();
         IDObjects = new HashSet<int>();
     }
 
@@ -96,7 +96,7 @@ public class Pool // Lớp cơ sở của Pooling
                 IDObjects.Add(newObject.GetInstanceID()); // Thêm ID của nó vào danh sách ID
                 return newObject; // Trả về gameObject được sinh ra
             }
-            newObject = listGameObject.Pop(); // Lấy GameObject từ List GameObject 
+            newObject = listGameObject.Dequeue(); // Lấy GameObject từ List GameObject 
             if (newObject == null) // Skip nếu object đã bị destroy (Unity treats destroyed as == null)
             {
                 continue; // Pop tiếp object khác hoặc instantiate mới nếu hết
@@ -118,6 +118,6 @@ public class Pool // Lớp cơ sở của Pooling
     {
         if (gameObject == null) return;
         gameObject.SetActive(false); // Tắt game obejct
-        listGameObject.Push(gameObject); // Đẩy game object vào danh sách object
+        listGameObject.Enqueue(gameObject); // Đẩy game object vào danh sách object
     }
 }

@@ -54,7 +54,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FillAmount: 0.8
+    - _FillAmount: -0.98
     - _ScaleAndRotationMultile: 1
     - _ScaleAndRotationMultiple: 1
     m_Colors:

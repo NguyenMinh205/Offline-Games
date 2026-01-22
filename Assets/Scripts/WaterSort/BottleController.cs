@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace NguyenQuangMinh.WaterSort
 {
@@ -56,6 +57,9 @@ namespace NguyenQuangMinh.WaterSort
         private bool _isCompleted = false;
         public bool IsCompleted => _isCompleted;
 
+        // --- Biến mới để quản lý Tween ---
+        private Tween _selectionTween;
+
         public void SetupBottle(DataWaterSortObject bottleData)
         {
             transform.rotation = Quaternion.identity;
@@ -66,6 +70,7 @@ namespace NguyenQuangMinh.WaterSort
             _bottleSR.sortingOrder = 0;
 
             _numOfColorInBottle = bottleData.numOfColorInBottle;
+            SetTargetPoint();
 
             _colorLayers = new List<BottleColorSO>(bottleData._colorsBottle);
             Init();
@@ -76,12 +81,17 @@ namespace NguyenQuangMinh.WaterSort
         public void Init()
         {
             _originalPos = transform.position;
-            if (_fillAmountBottle.Count > _numOfColorInBottle && _numOfColorInBottle >= 0)
+            SnapFillAmountToCorrectValue(); // FIX LỖI HIỂN THỊ
+            UpdateColor();
+            SetTopColorValue();
+        }
+
+        public void SnapFillAmountToCorrectValue()
+        {
+            if (_fillAmountBottle != null && _numOfColorInBottle >= 0 && _numOfColorInBottle < _fillAmountBottle.Count)
             {
                 _bottleSR.material.SetFloat("_FillAmount", _fillAmountBottle[_numOfColorInBottle]);
             }
-            UpdateColor();
-            SetTopColorValue();
         }
 
         public void UpdateColor()
@@ -213,14 +223,31 @@ namespace NguyenQuangMinh.WaterSort
 
         public void SetSelected(bool isSelected)
         {
+            if (_selectionTween != null && _selectionTween.IsActive())
+                _selectionTween.Kill();
+
+            Vector3 targetPos;
             if (isSelected)
             {
-                transform.position = _originalPos + Vector3.up * _selectMoveUpAmount;
+                targetPos = _originalPos + Vector3.up * _selectMoveUpAmount;
             }
             else
             {
-                transform.position = _originalPos;
+                targetPos = _originalPos;
             }
+
+            _selectionTween = transform.DOMove(targetPos, 0.25f)
+                .SetEase(isSelected ? Ease.OutBack : Ease.OutQuad);
+        }
+
+        public void PlayErrorShakeEffect()
+        {
+            transform.DOKill(true);
+
+            transform.position = _originalPos + Vector3.up * _selectMoveUpAmount;
+
+            transform.DOShakeRotation(0.4f, new Vector3(0, 0, 15f), 20, 90, true)
+                .OnComplete(() => transform.rotation = Quaternion.identity);
         }
 
         public void CalculateRotationIndex(int numOfEmptySpaceInSecondBottle)
@@ -236,7 +263,7 @@ namespace NguyenQuangMinh.WaterSort
 
         public void ChosenRotationPointAndDirection()
         {
-            if (transform.position.x > _bottleControllerRef.transform.position.x)
+            if (transform.position.x >= _bottleControllerRef.transform.position.x)
             {
                 _chosenRotationPoint = _leftRotationPoint;
                 _directionMultiplier = -1;
@@ -253,13 +280,13 @@ namespace NguyenQuangMinh.WaterSort
             float time = 0, lerpValue, angleValue, lastAngleValue = 0;
             AudioManager.Instance.PlayWaterSortPouringSound();
 
-            while (time < _timeRotateBottle)
+            while (time <= _timeRotateBottle)
             {
                 lerpValue = time / _timeRotateBottle;
                 angleValue = Mathf.Lerp(0, _directionMultiplier * _rotationValueBottle[_rotationValueIndex], lerpValue);
 
                 transform.RotateAround(_chosenRotationPoint.position, Vector3.forward, lastAngleValue - angleValue);
-                _bottleSR.material.SetFloat("_ScaleAndRotationMultiple", _rotateAndScaleMultiplierCurve.Evaluate(angleValue));
+                _bottleSR.material.SetFloat("_ScaleAndRotationMultiple", _rotateAndScaleMultiplierCurve.Evaluate(0));
 
                 if (_fillAmountBottle.Count > _numOfColorInBottle && _fillAmountBottle[_numOfColorInBottle] > _fillAmountCurve.Evaluate(angleValue) + 0.005f)
                 {
@@ -293,8 +320,10 @@ namespace NguyenQuangMinh.WaterSort
 
             if (_numOfColorInBottle < 0) _numOfColorInBottle = 0;
 
-            UpdateColor();
+            SnapFillAmountToCorrectValue();
+            if (_bottleControllerRef != null) _bottleControllerRef.SnapFillAmountToCorrectValue();
 
+            UpdateColor();
             _bottleControllerRef.CheckCompleteState();
 
             WaterSortGameManager.Instance.UpdateWaterLine(false);
@@ -332,6 +361,7 @@ namespace NguyenQuangMinh.WaterSort
             angleValue = 0;
             transform.eulerAngles = new Vector3(0, 0, angleValue);
             _bottleSR.material.SetFloat("_ScaleAndRotationMultiple", _rotateAndScaleMultiplierCurve.Evaluate(angleValue));
+
             if (_numOfColorInBottle < _fillAmountBottle.Count && _numOfColorInBottle >= 0)
             {
                 _bottleSR.material.SetFloat("_FillAmount", _fillAmountBottle[_numOfColorInBottle]);
@@ -392,6 +422,14 @@ namespace NguyenQuangMinh.WaterSort
             _bottleSR.sortingOrder -= 2;
 
             ObserverManager<WaterSortEvent>.PostEvent(WaterSortEvent.OnTransferFinished, null);
+        }
+
+        public void SetTargetPoint()
+        {
+            if (_fillAmountBottle != null && _numOfColorInBottle >= 0 && _numOfColorInBottle < _fillAmountBottle.Count)
+            {
+                _waterTargetPoint.localPosition = new Vector3(_waterTargetPoint.localPosition.x, _fillAmountBottle[_numOfColorInBottle], _waterTargetPoint.localPosition.z);
+            }
         }
     }
 }

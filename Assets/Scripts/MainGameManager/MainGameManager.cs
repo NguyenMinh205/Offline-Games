@@ -220,6 +220,12 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         for (int i = 3; i > 0; i--)
         {
+            if (_curGameManager == null)
+            {
+                _numberText.gameObject.SetActive(false);
+                StopCoroutine(_countDownCoroutine);
+                yield return null;
+            }    
             _numberText.text = i.ToString();
             yield return new WaitForSecondsRealtime(1f);
         }
@@ -252,6 +258,7 @@ public class MainGameManager : Singleton<MainGameManager>
             {
                 AudioManager.Instance.PlaySoundButtonClick();
                 nextLevel?.Invoke();
+                HideAllUI();
             });
         }
     }    

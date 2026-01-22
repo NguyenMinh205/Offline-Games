@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,8 +60,23 @@ namespace NguyenQuangMinh.ColorBlock
                 if (IsFullColumn(col)) colsToClear.Add(col);
             }
 
-            foreach (int row in rowsToClear) ClearRow(row);
-            foreach (int col in colsToClear) ClearColumn(col);
+            float baseDelay = 0.05f;
+
+            foreach (int row in rowsToClear)
+            {
+                for (int col = 0; col < amountColumn; col++)
+                {
+                    grid[row, col].PlayClearAnimation(col * baseDelay);
+                }
+            }
+
+            foreach (int col in colsToClear)
+            {
+                for (int row = 0; row < amountRow; row++)
+                {
+                    grid[row, col].PlayClearAnimation(row * baseDelay);
+                }
+            }
 
             int totalCleared = rowsToClear.Count + colsToClear.Count;
             if (totalCleared > 0)
@@ -73,10 +89,17 @@ namespace NguyenQuangMinh.ColorBlock
                 AudioManager.Instance.PlayColorBlockPlaceSound();
             }
 
-            GameManager_ColorBlocks.Instance.Spawner.CheckAndSpawn();
-
-            if (!CanPlaceAnyBlock())
-                GameManager_ColorBlocks.Instance.GameOver();
+            DOVirtual.DelayedCall(baseDelay * Math.Max(amountColumn, amountRow) + 0.1f, () =>
+            {
+                if (!CanPlaceAnyBlock())
+                {
+                    GameManager_ColorBlocks.Instance.GameOver();
+                }
+                else
+                {
+                    GameManager_ColorBlocks.Instance.Spawner.CheckAndSpawn();
+                }
+            });
         }
 
         private bool IsFullRow(int row)

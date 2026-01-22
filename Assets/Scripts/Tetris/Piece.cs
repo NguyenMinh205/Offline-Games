@@ -1,5 +1,4 @@
-﻿using NguyenQuangMinh.Sudoku;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -191,6 +190,13 @@ namespace NguyenQuangMinh.Tetris
             BoardManager.Instance.SetPiece(this);
             BoardManager.Instance.ClearLines();
             BoardManager.Instance.SpawnPiece();
+        }
+
+        public void ResetData()
+        {
+            _cells = null;
+            _stepTime = 0f;
+            _rotationIndex = 0;
         }
     }
 }

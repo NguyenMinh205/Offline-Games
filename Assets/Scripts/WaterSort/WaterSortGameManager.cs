@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -143,7 +144,6 @@ namespace NguyenQuangMinh.WaterSort
                     {
                         AudioManager.Instance.PlayWaterSortSelectedBottleSound();
                         _chosenBottle = hit;
-
                         _chosenBottle.SetSelected(true);
                     }
                 }
@@ -152,7 +152,6 @@ namespace NguyenQuangMinh.WaterSort
                     if (_chosenBottle == hit)
                     {
                         AudioManager.Instance.PlayWaterSortUnselectedBottleSound();
-
                         _chosenBottle.SetSelected(false);
                         _chosenBottle = null;
                     }
@@ -172,10 +171,10 @@ namespace NguyenQuangMinh.WaterSort
                         else
                         {
                             AudioManager.Instance.PlayWaterSortUnselectedBottleSound();
-                            _chosenBottle.SetSelected(false);
 
+                            _chosenBottle.PlayErrorShakeEffect();
+                            _chosenBottle.SetSelected(false); 
                             _chosenBottle = null;
-                            _targetBottle = null;
                         }
                     }
                 }
@@ -193,6 +192,10 @@ namespace NguyenQuangMinh.WaterSort
         private void OnTransferFinishedHandler(object param)
         {
             _isGameActive = true;
+            _chosenBottle.SetTargetPoint();
+            _targetBottle.SetTargetPoint();
+            _chosenBottle = null;
+            _targetBottle = null;
             CheckWinCondition();
         }
 

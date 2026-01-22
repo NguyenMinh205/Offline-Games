@@ -233,8 +233,9 @@ MonoBehaviour:
   - 70
   - 82
   - 90
-  _timeRotateBottle: 1
+  _timeRotateBottle: 0.5
   _moveSpeedMultiplier: 2
+  _selectMoveUpAmount: 0.5
   _bottleSR: {fileID: 8042132245842413813}
   _waterTargetPoint: {fileID: 224158942656640917}
   _rotateAndScaleMultiplierCurve:
@@ -243,15 +244,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.0020164538
-      outSlope: -0.0020164538
+      inSlope: -0.001999998
+      outSlope: -0.001999998
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 14.699999
-      value: 0.97035813
+      time: 15
+      value: 0.97
       inSlope: -0.0059325574
       outSlope: -0.0059325574
       tangentMode: 0

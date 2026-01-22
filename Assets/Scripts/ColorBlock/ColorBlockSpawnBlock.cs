@@ -69,6 +69,9 @@ namespace NguyenQuangMinh.ColorBlock
                     int index = Random.Range(0, blockPrefabs.Count);
                     ColorBlock_Block newBlock = GetBlock(slots[i], blockPrefabs[index]);
                     newBlock.transform.localPosition = Vector3.zero;
+                    int rotateCount = Random.Range(0, 4);
+                    if (rotateCount != 0)
+                        newBlock.transform.localRotation = Quaternion.Euler(0, 0, 90f * rotateCount);
                     newBlock.transform.localScale = Vector3.one;
                     newBlock.InitBlock(slots[i]);
                     slots[i].SetBlock(newBlock);

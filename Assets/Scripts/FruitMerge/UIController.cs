@@ -18,7 +18,7 @@ namespace NguyenQuangMinh.FruitMerge
             MainGameManager.Instance.ShowScore(true);
             score = 0;
             MainGameManager.Instance.SetCurScore(score);
-            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.ColorBlockHighScore);
+            MainGameManager.Instance.SetHighScore(DataManager.Instance.GameData.FruitMergeHighScore);
             ObserverManager<EventID>.AddRegisterEvent(EventID.UpdateScore, param => UpdateViewScore((int)param));
         }
 
@@ -45,7 +45,7 @@ namespace NguyenQuangMinh.FruitMerge
 
         private void SetHighScore()
         {
-            if (score <= DataManager.Instance.GameData.NumberSlideHighScore)
+            if (score <= DataManager.Instance.GameData.FruitMergeHighScore)
             {
                 return;
             }

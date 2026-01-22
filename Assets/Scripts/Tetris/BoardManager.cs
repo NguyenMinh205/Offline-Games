@@ -47,6 +47,7 @@ namespace NguyenQuangMinh.Tetris
             if (_piece != null)
             {
                 ClearPiece(_piece);
+                _piece.ResetData();
             }
         }
 
