@@ -10,22 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3109229feb6c5ea42a469de8725ace79, type: 3}
-  m_Name: Level2
+  m_Name: Level12
   m_EditorClassIdentifier: 
-  gridSize: {x: 6, y: 6}
+  gridSize: {x: 7, y: 7}
   dataNodes:
   - colorType: 1
-    startPos: {x: 5, y: 2}
-    endPos: {x: 5, y: 5}
+    startPos: {x: 0, y: 6}
+    endPos: {x: 6, y: 6}
   - colorType: 2
-    startPos: {x: 1, y: 2}
-    endPos: {x: 4, y: 5}
+    startPos: {x: 0, y: 0}
+    endPos: {x: 1, y: 1}
   - colorType: 3
-    startPos: {x: 1, y: 1}
-    endPos: {x: 4, y: 1}
+    startPos: {x: 2, y: 1}
+    endPos: {x: 5, y: 2}
   - colorType: 4
-    startPos: {x: 1, y: 3}
-    endPos: {x: 2, y: 4}
+    startPos: {x: 0, y: 2}
+    endPos: {x: 1, y: 5}
   - colorType: 6
+    startPos: {x: 5, y: 4}
+    endPos: {x: 6, y: 5}
+  - colorType: 8
     startPos: {x: 2, y: 3}
-    endPos: {x: 5, y: 1}
+    endPos: {x: 4, y: 4}
+  - colorType: 5
+    startPos: {x: 6, y: 5}
+    endPos: {x: 7, y: 3}
+  - colorType: 9
+    startPos: {x: 1, y: 0}
+    endPos: {x: 6, y: 2}

@@ -12,29 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3109229feb6c5ea42a469de8725ace79, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  gridSize: {x: 8, y: 8}
+  gridSize: {x: 6, y: 6}
   dataNodes:
   - colorType: 1
-    startPos: {x: 2, y: 5}
-    endPos: {x: 6, y: 0}
+    startPos: {x: 3, y: 4}
+    endPos: {x: 5, y: 0}
   - colorType: 2
-    startPos: {x: 0, y: 7}
-    endPos: {x: 7, y: 5}
-  - colorType: 3
-    startPos: {x: 0, y: 3}
-    endPos: {x: 7, y: 2}
-  - colorType: 4
-    startPos: {x: 5, y: 5}
-    endPos: {x: 7, y: 4}
-  - colorType: 6
-    startPos: {x: 0, y: 4}
-    endPos: {x: 0, y: 6}
-  - colorType: 7
-    startPos: {x: 5, y: 7}
-    endPos: {x: 7, y: 6}
-  - colorType: 8
     startPos: {x: 1, y: 1}
-    endPos: {x: 7, y: 0}
-  - colorType: 9
-    startPos: {x: 4, y: 5}
-    endPos: {x: 7, y: 3}
+    endPos: {x: 4, y: 0}
+  - colorType: 3
+    startPos: {x: 3, y: 0}
+    endPos: {x: 5, y: 3}
+  - colorType: 6
+    startPos: {x: 2, y: 3}
+    endPos: {x: 4, y: 4}

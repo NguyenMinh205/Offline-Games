@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 namespace NguyenQuangMinh.MemoryCard
@@ -9,7 +10,7 @@ namespace NguyenQuangMinh.MemoryCard
     {
         [Header("Settings")]
         [SerializeField] private Card cardPrefab;
-        [SerializeField] private List<Transform> _cardRow; 
+        [SerializeField] private List<Transform> _cardRow;
         [SerializeField] private List<Sprite> _sprites;
         [SerializeField] private int numOfPairs;
 
@@ -20,6 +21,14 @@ namespace NguyenQuangMinh.MemoryCard
         [SerializeField] private float _dealDuration = 0.3f;
         [SerializeField] private float _dealDelay = 0.05f;
 
+        [Header("Timer")]
+        [SerializeField] private GameObject _timerObject;
+        [SerializeField] private Image _timerFillImage;
+        [SerializeField] private float _timerDuration = 60f;
+
+        private float _currentTimer;
+        private bool _isGameActive;
+
         private List<Sprite> _cardSprites;
         private List<Card> _cards;
 
@@ -27,6 +36,26 @@ namespace NguyenQuangMinh.MemoryCard
         private Card _secondCard;
         private int _matchedPairsCount;
         private bool _isProcessing;
+
+        private void Update()
+        {
+            if (!_isGameActive) return;
+
+            if (_currentTimer > 0)
+            {
+                _currentTimer -= Time.deltaTime;
+
+                if (_timerFillImage != null)
+                {
+                    _timerFillImage.fillAmount = _currentTimer / _timerDuration;
+                }
+
+                if (_currentTimer <= 0)
+                {
+                    HandleLoseGame();
+                }
+            }
+        }
 
         public void StartNewGame()
         {
@@ -40,6 +69,11 @@ namespace NguyenQuangMinh.MemoryCard
             _firstCard = null;
             _secondCard = null;
 
+            _currentTimer = _timerDuration;
+            if (_timerFillImage != null) _timerFillImage.fillAmount = 1f;
+            if (_timerObject != null) _timerObject.SetActive(true);
+            _isGameActive = true;
+
             foreach (var row in _cardRow)
             {
                 if (row != null) row.gameObject.SetActive(true);
@@ -50,6 +84,8 @@ namespace NguyenQuangMinh.MemoryCard
 
         public void ResetGame()
         {
+            _isGameActive = false;
+
             if (_cards != null && _cards.Count > 0)
             {
                 foreach (var card in _cards)
@@ -66,7 +102,6 @@ namespace NguyenQuangMinh.MemoryCard
         public void Restart()
         {
             StopAllCoroutines();
-
             StartNewGame();
         }
 
@@ -168,7 +203,7 @@ namespace NguyenQuangMinh.MemoryCard
 
         public void SetSelect(Card card)
         {
-            if (_isProcessing || card.IsSelected || card.IsMatched) return;
+            if (!_isGameActive || _isProcessing || card.IsSelected || card.IsMatched) return;
 
             card.Show();
 
@@ -187,6 +222,8 @@ namespace NguyenQuangMinh.MemoryCard
         IEnumerator CheckMatching(Card card1, Card card2)
         {
             yield return new WaitForSeconds(_timeCheckCard);
+
+            if (!_isGameActive) yield break;
 
             if (card1.CardSprite == card2.CardSprite)
             {
@@ -212,11 +249,21 @@ namespace NguyenQuangMinh.MemoryCard
         {
             if (_matchedPairsCount >= numOfPairs)
             {
+                _isGameActive = false;
                 DOVirtual.DelayedCall(1f, delegate
                 {
                     MainGameManager.Instance.ShowWinUI(false);
                 });
             }
+        }
+
+        private void HandleLoseGame()
+        {
+            _isGameActive = false;
+            _currentTimer = 0;
+            if (_timerFillImage != null) _timerFillImage.fillAmount = 0;
+
+            MainGameManager.Instance.ShowLoseUI();
         }
     }
 }

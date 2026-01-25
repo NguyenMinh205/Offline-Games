@@ -135,6 +135,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public void BackToMainMenu()
     {
+        _gameState = GameState.MainMenu;
         AudioManager.Instance.PlaySoundButtonClick();
         DoTransition(() =>
         {
@@ -153,7 +154,6 @@ public class MainGameManager : Singleton<MainGameManager>
 
             AudioManager.Instance.PlayMusicInMenu();
         });
-        _gameState = GameState.MainMenu;
     }
 
     public void HideAllUI()
