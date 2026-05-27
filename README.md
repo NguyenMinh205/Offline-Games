@@ -1,109 +1,73 @@
-# 🎮 Tank Battle
+# 🎮 Offline Games Collection
 
-> Một tựa game bắn súng sinh tồn theo đợt (wave survival) góc nhìn từ trên xuống được phát triển bằng Unity (C#), lấy cảm hứng từ cơ chế chiến đấu của **BoxHead** và **Archero**.
+> Một bộ sưu tập các trò chơi giải đố 2D được phát triển bằng Unity (C#), tập trung vào trải nghiệm tựa game giải đó đơn giản, dễ thao tác và thú vị.
 
 ---
 
 ## 📖 Giới thiệu
 
-**Tank Battle** là game bắn súng sinh tồn nhìn từ trên xuống, nơi người chơi điều khiển một chiếc xe tăng chiến đấu qua các đợt kẻ thù ngày càng mạnh hơn. Mục tiêu là tồn tại càng lâu càng tốt, thu thập vàng trong trận đấu để **nâng cấp vĩnh viễn các chỉ số của xe tăng** và **mua các buff hỗ trợ** tại màn hình chính trước khi bắt đầu hành trình phá kỷ lục số wave mới.
+**Offline Games Collection** là một ứng dụng tổng hợp hơn 15 mini-game logic và giải đố kinh điển (Sudoku, Minesweeper, Tetris, Wordle, Water Sort, Battleship...). Dự án được thiết kế chuẩn chỉ để chạy ngoại tuyến (offline) với mục tiêu hiệu năng (90 FPS target), giao diện trực quan sống động nhờ DOTween và hệ thống bảo mật dữ liệu cá nhân hóa nâng cao.
 
 ---
 
 ## 🕹️ Cách chơi
 
-| Phím | Hành động |
-|------|-----------|
-| `W` | Tiến về phía trước |
-| `S` | Lùi về phía sau |
-| `A` | Xoay trái |
-| `D` | Xoay phải |
-| `1` | Dùng Buff 1 — Hồi máu |
-| `2` | Dùng Buff 2 — Tốc độ bắn |
-| `3` | Dùng Buff 3 — Bất tử |
+Vì đây là một bộ sưu tập game trí tuệ giải đố, các thao tác điều khiển chủ yếu xoay quanh việc tương tác chuột:
 
-- Tiêu diệt toàn bộ kẻ thù để hoàn thành wave.
-- Sau mỗi wave, chọn **1 trong 3 phần thưởng** để tăng sức mạnh tức thời trong trận.
-- Tích lũy vàng thu thập từ kẻ thù để:
-  - **Nâng cấp thuộc tính xe tăng** (HP, Shield, Sức tấn công) vĩnh viễn tại Garage.
-  - **Mua trữ sẵn các Buff kích hoạt** (tối đa mang vào trận để sử dụng).
+| Thao tác | Hành động chung |
+|----------|-----------------|
+| `Chuột trái (Left Click)` | Lựa chọn game, nhấn số điền ô, lật thẻ bài, đổ nước hoặc chọn tọa độ bắn. |
+| `Nút Replay (R)` | Chơi lại ván hiện tại ngay lập tức. |
+| `Nút Back Home` | Quay trở về màn hình danh sách game chính. |
 
 ---
 
-## ⚔️ Cơ chế chính
+## ⚔️ Cơ chế chính của các Game tiêu biểu
 
-### 🚗 Xe tăng người chơi
-- Điều khiển theo kiểu xe tăng thật: xoay thân rồi mới di chuyển theo hướng đó.
-- Hệ thống máu kép: **Shield** hấp thụ sát thương trước, **HP** chỉ giảm khi Shield về 0.
-- Shield tự hồi sinh sau vài giây không bị tấn công.
+### 🧠 Sudoku Generator & Solver
+- **Sinh lưới tự động:** Tạo lưới Sudoku ngẫu nhiên theo 3 độ khó (Easy, Medium, Hard) bằng phương pháp xáo trộn số kết hợp đệ quy.
+- **Bảo chứng độc nhất:** Loại bỏ các ô trống (Digging Holes) nhưng luôn kiểm tra thông qua bộ giải thuật (**Recursive Backtracking DFS**) để đảm bảo mỗi ván chơi chỉ có duy nhất **1 đáp án đúng**.
+- **Hỗ trợ thời gian thực:** Kiểm tra tính hợp lệ của số điền vào hàng, cột và phân vùng 3x3 ngay lập tức.
 
-### 🆙 Hệ thống Nâng cấp thuộc tính (Upgrades)
-Người chơi dùng vàng tích lũy được sau các trận đấu để nâng cấp các chỉ số cơ bản của xe tăng tại màn hình chính. Giá nâng cấp tăng dần theo từng cấp độ:
-- **HP (Máu tối đa):** Tăng khả năng chịu đựng khi Shield bị vỡ.
-- **Shield (Giáp/Khiên tối đa):** Tăng lượng sát thương hấp thụ trước khi bị trừ vào HP.
-- **Attack Stat (Sức tấn công cơ bản):** Tăng lượng sát thương gây ra cho tất cả các loại vũ khí.
+### 💣 Minesweeper (Dò mìn)
+- **Tạo bản đồ an toàn:** Rải bom ngẫu nhiên sau lượt click đầu tiên của người chơi để tránh chết ngay lập tức.
+- **Thuật toán loang:** Áp dụng giải thuật **Flood-fill** đệ quy để mở rộng nhanh toàn bộ vùng ô trống xung quanh khi người chơi click trúng ô không có mìn lân cận.
 
-### 🔫 Hệ thống vũ khí — 4 loại nòng súng
-| Vũ khí | Mô tả |
-|--------|-------|
-| Standard | Bắn 1 viên đạn thẳng, cân bằng |
-| Triple Shot | Bắn 3 viên cùng lúc theo hình rẻ quạt |
-| Explosive | Đạn nổ diện rộng khi chạm mục tiêu |
-| Laser Beam | Tia laser liên tục gây sát thương theo thời gian |
+### 🧱 Tetris (Xếp gạch)
+- **Lưới tọa độ động:** Kiểm tra va chạm xoay khối gạch (Super Rotation System đơn giản) và di chuyển mượt mà.
+- **Xử lý xóa dòng:** Phát hiện nhanh dòng gạch đầy để thực hiện hiệu ứng xóa hàng, dồn gạch phía trên xuống và cộng điểm tích lũy.
 
-> Vũ khí được chọn qua **phần thưởng cuối wave đầu tiên**.
+### 🧪 Water Sort (Rót nước)
+- **Cơ chế xếp chồng:** Sử dụng cấu trúc dữ liệu **Stack** cho mỗi ống nghiệm. Người chơi chỉ có thể đổ nước sang ống nghiệm khác nếu cùng màu nước ở đỉnh hoặc ống đích còn trống.
 
-### 👾 Loại kẻ thù
-| Kẻ thù | Hành vi |
-|--------|---------|
-| **Boom Tank** | Lao thẳng vào người chơi, nổ khi va chạm |
-| **Shooter Tank** | Giữ khoảng cách, bắn đạn từ xa |
-| **Boss Tank** | HP và sát thương cao, xuất hiện ở các wave cột mốc |
+---
 
-### 🌊 Hệ thống Wave
-- Wave càng cao, kẻ thù càng nhiều và mạnh hơn theo hệ số **mũ (×1.1 mỗi wave)**.
-- Cứ mỗi **bội số của 10** (wave 10, 20, 30...) sẽ xuất hiện thêm Boss.
-- Số wave cao nhất đạt được sẽ được lưu lại.
+## 🧪 Hệ thống quản lý & Lưu trữ dữ liệu
 
-### 🎁 Phần thưởng cuối wave
-Sau mỗi wave, chọn **1 trong 3** phần thưởng ngẫu nhiên:
-- Tăng HP tối đa / Shield tối đa / Sát thương / Tốc độ bắn / Tốc độ di chuyển.
-- Hoặc đổi sang vũ khí mới (chỉ ở wave 1).
-
-### 💊 Cửa hàng & Buff kích hoạt (Buff Store)
-Người chơi phải **dùng vàng để mua tích trữ các Buff** tại màn hình chính trước khi vào trận. Trong trận đấu, số lượng buff sẽ giảm đi mỗi khi sử dụng:
-| Buff | Phím | Hiệu ứng chiến thuật | Cooldown |
-|------|------|-----------------------|----------|
-| **Heal** | `1` | Hồi ngay lập tức 15% HP tối đa | 7s |
-| **Rapid Fire** | `2` | Tăng 100% tốc độ bắn (giảm 50% cooldown nòng) trong 5s | 10s |
-| **Invincibility** | `3` | Kích hoạt trạng thái bất tử (miễn nhiễm sát thương) trong 5s | 15s |
-
-### 🏆 Achievement
-Hệ thống thành tích theo dõi các mốc trong suốt quá trình chơi:
-- Tổng số kẻ thù đã tiêu diệt
-- Số wave cao nhất đạt được
-- Tổng vàng đã chi tiêu
-- Tổng số ván đã chơi
-
-Mở khóa thành tích sẽ nhận được **phần thưởng vàng**.
+### 💾 Hệ thống Save Game bảo mật
+Nhằm chống lại việc chỉnh sửa file lưu trữ thủ công hoặc hack điểm số cục bộ, dự án triển khai lớp tiện ích nâng cao:
+* **Mã hóa tùy biến:** Sử dụng giải thuật **XOR Encryption** mã hóa dữ liệu JSON thành tệp tin nhị phân `.dat`.
+* **Khóa động theo phần cứng:** Key mã hóa được tạo trực tiếp từ định danh duy nhất của thiết bị người chơi (`SystemInfo.deviceUniqueIdentifier`).
+* **Tính độc lập:** Mỗi game lưu dữ liệu điểm số/high-score tách biệt dưới dạng enum an toàn (`eData`).
 
 ---
 
 ## 🛠️ Công nghệ sử dụng
 
-- **Unity** — Game Engine
-- **C#** — Ngôn ngữ lập trình chính
-- **DOTween** — Hiệu ứng animation UI
-- **TextMesh Pro** — Hiển thị văn bản
-- **ScriptableObjects** — Cấu hình wave & phần thưởng
-- **PlayerPrefs** — Lưu dữ liệu người chơi cục bộ
+- **Unity** — Game Engine (URP)
+- **C#** — Ngôn ngữ lập trình chính (.NET)
+- **DOTween** — Thiết kế hiệu ứng menu chuyển cảnh và chuyển động UI động
+- **TextMesh Pro** — Hệ thống hiển thị phông chữ sắc nét
+- **ScriptableObjects** — Quản lý cấu hình cấu trúc dữ liệu
+- **File I/O & System.IO** — Quản lý lưu trữ tệp tin cục bộ mã hóa
 
 ---
 
 ## 📐 Kiến trúc nổi bật
 
-- **Singleton Pattern** — Quản lý tập trung: Game State, Audio, Data, Achievement
-- **Observer Pattern** — Hệ thống sự kiện generic, decoupled giữa các module
-- **Object Pooling** — Tái sử dụng đạn, kẻ thù, hiệu ứng VFX để tối ưu hiệu năng
+- **Singleton Pattern** — Triển khai cấu trúc lõi `MainGameManager` và `AudioManager` để quản lý tập trung trạng thái toàn cục (Global states) và âm thanh.
+- **Interface-driven Architecture** — Sử dụng `IGameManager` để kết nối lỏng (decouple) giữa lõi hệ thống và các mini-game, giúp tích hợp một trò chơi mới vào hệ thống chỉ trong vài giây.
+- **Generic Object Pooling** — Thiết kế `PoolingManager` dùng `Queue<GameObject>` phối hợp cùng đầu mục `HashSet<int>` tra cứu Instance ID, tối ưu hóa triệt để thời gian khởi tạo phần tử và triệt tiêu giật lag do Garbage Collection (GC spikes).
+- **Observer Pattern** — Hệ thống sự kiện `ObserverManager` hỗ trợ giao tiếp bất đồng bộ giữa các thành phần UI và logic lõi trò chơi một cách tinh gọn.
 
 ---
