@@ -6,7 +6,7 @@
 
 ## 📖 Giới thiệu
 
-**Offline Games Collection** là một ứng dụng tổng hợp hơn 15 mini-game logic và giải đố kinh điển (Sudoku, Minesweeper, Tetris, Wordle, Water Sort, Battleship...). Dự án được thiết kế chuẩn chỉ để chạy ngoại tuyến (offline) với mục tiêu hiệu năng (90 FPS target), giao diện trực quan sống động nhờ DOTween và hệ thống bảo mật dữ liệu cá nhân hóa nâng cao.
+**Offline Games Collection** là một ứng dụng tổng hợp hơn 10 mini-game logic và giải đố kinh điển (Sudoku, Minesweeper, Tetris, Wordle, Water Sort, ...). Dự án được thiết kế chuẩn chỉ để chạy ngoại tuyến (offline) với mục tiêu hiệu năng (90 FPS target), giao diện trực quan sống động nhờ DOTween và hệ thống bảo mật dữ liệu cá nhân hóa nâng cao.
 
 ---
 
